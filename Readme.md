@@ -1,5 +1,5 @@
 # 5月25日のスライド
-[ここをクリック](https://8-u8.github.io/TokyoR/Marketing-ScienceRMarketing-ScienceR.html.html)
+[ここをクリック](https://8-u8.github.io/TokyoR/Marketing-ScienceR.html)
 
 
 # はじめに
