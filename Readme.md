@@ -1,3 +1,7 @@
+# 5月25日のスライド
+[ここをクリック](https://8-u8.github.io/TokyoR/Marketing-ScienceRMarketing-ScienceR.html.html)
+
+
 # はじめに
 - TokyoRの発表で使った関数やコード群です．
 - 未来のフォルダもあります．
