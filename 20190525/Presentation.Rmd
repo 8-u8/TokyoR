@@ -3,7 +3,8 @@ title: "Marketing Science with R"
 author: 'TokyoR #78 Kien Knot(きぬいと; @0_u0)'
 date: "2019/5/25"
 output:
-  ioslides_presentation: default
+  ioslides_presentation: 
+    widescreen: yes
   beamer_presentation: default
 ---
 
@@ -131,23 +132,29 @@ dat <- datA %>%
   - 結果「経験」「勘」に頼らざるを得ない
   
 # 理由2. Excel信仰
-# 「Excelでできるじゃん」
-# 反論できず悔しい
-# わかる
 ## 「Excelでなんでもできるじゃん」
 - <b>「なんでもはできないわよ、できることだけ」</b>
   - Excelでの手計算のミスが業務の8割を占めた2018年度
   - 誰もやりたくてやらかすわけじゃない
-- 「できる」から「効率化」へ
-  - 「Excelでできる」は「最適解」とは限らない
-    - ちょっと仕様が変わると詰みがちなVBA
-    - エンジニアリングしなくても実装できる関数
-    - 進まないバージョン管理
+- Excelでできないこと=「不可能」
+  - 「Excelじゃどうしようもない大規模なデータなんです」
+    - <b>20万行</b> × 3列
+- Excelで回帰分析やパラメータの調整
+  - 実際できる
+  - 計算プロセスも見やすいね
+- 「もう全部Excelでよくない？」
     
 ## その結果
 - 【きぬいと編集】案件結果_上司確認_ver2_2019xxxx.xls
 
 <div style="text-align: center;">![こうなる](./.picture/chanmio.jpg)</div>
+
+## 全部Excelでよくない？→よくない！
+- バージョン管理が煩雑になる
+  - 追加で見たい指標がどんどん増えてサグラダファミリア.xlsx
+- 作業工程が属人化する
+  - Excelのプロフェッショナリティで給与が決まりがち
+- この2つをどうにかしたくない？
 
 # 非Tech系データ分析
 
