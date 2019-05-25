@@ -1,19 +1,2 @@
-<<<<<<< HEAD
-# 5月25日のスライドはー？？
-[はいここ](https://8-u8.github.io/TokyoR/20190525/Presentation.html)
-=======
-# 5月25日のスライド
-[ここをクリック](https://8-u8.github.io/TokyoR/Marketing-ScienceR.html)
-
-
-# はじめに
-- TokyoRの発表で使った関数やコード群です．
-- 未来のフォルダもあります．
-
-# 注意
-- コードの実行について，特別許可はないです．
-- 一応動作確認してますが，環境やらなにやらのエラーはありえます．
-    - 何かあれば連絡ください．
-- コードで環境が破壊されたなどについて，作成者は責任を負いません．
-
->>>>>>> 6ab22372cacc7f992d68ca90acc550e5a5f02649
+# 5月25日にTokyoRいきました
+[資料はここ](https://8-u8.github.io/TokyoR/20190525/Presentation.html)
