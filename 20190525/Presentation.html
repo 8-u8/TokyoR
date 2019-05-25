@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Marketing Science with R</title>
+  <title>Marketing Scienceやる前の前処理 with R</title>
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,7 +19,7 @@
     var SLIDE_CONFIG = {
       // Slide settings
       settings: {
-                title: 'Marketing Science with R',
+                title: 'Marketing Scienceやる前の前処理 with R',
                         useBuilds: true,
         usePrettify: true,
         enableSlideAreas: true,
@@ -3122,34 +3122,32 @@ slide:not(.current) .plotly.html-widget{
 <slide class=""><hgroup><h2>自己紹介</h2></hgroup><article >
 
 <ul>
-<li>きぬいと(<a href='https://twitter.com/0_u0' title=''>0_u0</a>)
+<li>きぬいと(<a href='https://twitter.com/0_u0' title=''>@0_u0</a>)
 
 <ul>
-<li>よくLTをやります。</li>
+<li>データ触るのに本名は必要ないので非公開です。</li>
+<li>R初心者7年目</li>
 </ul></li>
-<li>労働者階級2年目
-
-<ul>
 <li>マーケティング系調査屋さんのアナリスト
 
 <ul>
-<li><b>兼</b>部署内作業環境改善係
+<li>労働者階級2年目
 
 <ul>
-<li>「きぬいとくんのRコード動かないんだけど」→R ver 3.3.x</li>
+<li>データの前処理をRコード1行ですべて終わらせる仕事</li>
+<li>最近ShellとかPythonとかも1ライナーし始めている</li>
 </ul></li>
-<li>開発環境整備中</li>
 </ul></li>
+<li>仲間になる予定の人が来てます。
+
+<ul>
+<li>仕事<b>は</b>真面目にやってます</li>
+<li>仲間はつねに募集中です。</li>
 </ul></li>
 <li>最近の出来事
 
 <ul>
-<li>転職しないことにした
-
-<ul>
 <li>キャリアなんもわからん問題でバズってしまった</li>
-</ul></li>
-<li>OSをUbuntuに変えた</li>
 </ul></li>
 </ul>
 
@@ -3179,18 +3177,23 @@ slide:not(.current) .plotly.html-widget{
 </article></slide><slide class=""><hgroup><h2>今日のお話</h2></hgroup><article >
 
 <ul>
-<li>非IT企業でRで業務を効率化するために<s>殴り合う</s>環境を創るお話
+<li>マーケティング・サイエンスをやっていく前に必要な準備
 
 <ul>
-<li>「さーてデータを読み込んだぞー」からのお話</li>
+<li>社内環境</li>
+<li>取引先への説明</li>
 </ul></li>
 <li>R: エンジニアじゃない人も割と使ってる
 
 <ul>
 <li>でもこの場合エンジニア側からもビジネス側からも浮きがち</li>
-<li>主にきぬいとです</li>
 </ul></li>
-<li>対象: 会社でR使いたいけどエンジニアじゃないんだよなあという人</li>
+<li>対象: 会社でR使いたいけどエンジニアじゃないんだよなあという人
+
+<ul>
+<li>B to BでR使いたい人</li>
+<li>対象外の人は好きな寿司ネタを#TokyoRでつぶやいておいてください</li>
+</ul></li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2><s>仮想敵</s> 説得したい人</h2></hgroup><article  id="-">
@@ -3206,6 +3209,11 @@ slide:not(.current) .plotly.html-widget{
 
 <ul>
 <li>これがRmarkdownでできているのでTokyoR LTが成立します！！！</li>
+</ul></li>
+<li>データは？
+
+<ul>
+<li>全部フィクションです。</li>
 </ul></li>
 </ul>
 
@@ -3338,7 +3346,12 @@ slide:not(.current) .plotly.html-widget{
 <li>が、データを見る文化がない</li>
 </ul></li>
 </ul></li>
-<li>評価指標(見たい数字)から定義するとこっちも楽</li>
+<li>評価指標(見たい数字)から定義するとこっちも楽
+
+<ul>
+<li>データから「見れる」指標を定義したい</li>
+<li>データの見方だけでも整理するだけで違う</li>
+</ul></li>
 </ul>
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>理由2. Excel信仰</h2></hgroup><article  id="2.-excel">
@@ -3446,8 +3459,9 @@ slide:not(.current) .plotly.html-widget{
 <li>「勝手なことをするな！」と言われたら……？
 
 <ul>
-<li><b>全く関係ないですけどﾍｲｼｬでは「やるねぇ〜！」と言われます</b></li>
+<li><s>全面戦争</s>話し合いですね</li>
 </ul></li>
+<li><b>全く関係ないですけどﾍｲｼｬでは「やるねぇ〜！」と言われます</b></li>
 </ul></li>
 <li>コード書いて、Ctrl+Enterで全部自動化
 
@@ -3495,13 +3509,11 @@ slide:not(.current) .plotly.html-widget{
 ## 6     6     0     0     0     0     0     1     0     0     0</pre>
 
 <ul>
-<li>上司が古典文法でガチャガチャやってたやつをモダンに書き換えた</li>
 <li>たった6行で可視化のためのテーブルが完成するのやばない？
 
 <ul>
-<li>Excelが得意な人に渡してちゃんと「協力」できる</li>
+<li>Excelで可視化するのが得意な人と協力できるね</li>
 <li>「R、やるじゃん」となる</li>
-<li><b>モテる</b></li>
 </ul></li>
 </ul>
 
@@ -3527,18 +3539,6 @@ slide:not(.current) .plotly.html-widget{
 
 <ul>
 <li>いいぞ</li>
-</ul></li>
-</ul>
-
-</article></slide><slide class=""><hgroup><h2>お客様の声</h2></hgroup><article >
-
-<ul>
-<li>「この動きは知らなかったなあ」</li>
-<li>「ライバルと比べるとこうなっているのか」</li>
-<li>「ここからこういうことできますか？」
-
-<ul>
-<li>Rのおかげで受ける仕事の質も上がりました！</li>
 </ul></li>
 </ul>
 
