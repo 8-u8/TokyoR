@@ -3107,7 +3107,7 @@ slide:not(.current) .plotly.html-widget{
 
 <body style="opacity: 0">
 
-<slides>
+<slides class="layout-widescreen">
 
   <slide class="title-slide segue nobackground">
         <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
@@ -3119,7 +3119,11 @@ slide:not(.current) .plotly.html-widget{
           </hgroup>
   </slide>
 
-<slide class=""><hgroup><h2>誰？</h2></hgroup><article  id="誰">
+<slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>改め</h2></hgroup><article  id="改め">
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Rが教えてくれたもの　　　　　　　そして教えてくれないもの</h2></hgroup><article  id="rが教えてくれたもの-そして教えてくれないもの">
+
+</article></slide><slide class=""><hgroup><h2>誰？</h2></hgroup><article  id="誰">
 
 <ul>
 <li><a href='https://twitter.com/0_u0' title=''>きぬいと</a>
@@ -3127,18 +3131,8 @@ slide:not(.current) .plotly.html-widget{
 <ul>
 <li>TokyoRで毎月発表してたような人。</li>
 </ul></li>
-<li>調査屋さんのアナリスト
-
-<ul>
-<li>主なお仕事: 統計モデリング
-
-<ul>
-<li>予測もそう</li>
-<li>分類もそう</li>
-<li>説明モデルもそう</li>
-</ul></li>
-</ul></li>
-<li>主な仕事
+<li><p>調査屋さんのアナリスト</p></li>
+<li>趣味
 
 <ul>
 <li>簡単なことを難しく考える</li>
@@ -3150,16 +3144,45 @@ slide:not(.current) .plotly.html-widget{
 </ul></li>
 </ul>
 
-</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>今日のお話</h2></hgroup><article  id="今日のお話">
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>今日のテーマは「決める」</h2></hgroup><article  id="今日のテーマは決める">
 
-</article></slide><slide class=""><hgroup><h2>みんなー！「意思決定」支援してる？</h2></hgroup><article  id="みんなー意思決定支援してる">
+</article></slide><slide class=""><hgroup><h2>人間は「人生の分かれ道」に立ちがち</h2></hgroup><article  id="人間は人生の分かれ道に立ちがち">
+
+<ul>
+<li><p>受験「そっか、じゃあ卒業したら、別々の大学だね……」</p></li>
+<li><p>就活「そっか、東京、いっちゃうんだ……」</p></li>
+<li><p>転職「そっか、この会社やめちゃうんだね……」</p></li>
+<li><p>結婚「結婚したのか……俺以外のやつと」</p></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>そして迷いがち</h2></hgroup><article  id="そして迷いがち">
+
+<ul>
+<li>どの選択が「良い」のかわからない</li>
+<li>「こっちが良さそう」って誰かに言ってほしい
+
+<ul>
+<li>そんな都合のいい存在はない。</li>
+</ul></li>
+<li>そもそも「良い」って何……？
+
+<ul>
+<li>人生って何……？</li>
+<li>生きるとは……？</li>
+</ul></li>
+<li>どんどん思考がRegression。</li>
+</ul>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Regression？</h2></hgroup><article  id="regression">
+
+</article></slide><slide class=""><hgroup><h2>「意思決定」のための回帰分析</h2></hgroup><article  id="意思決定のための回帰分析">
 
 <ul>
 <li>回帰分析の結果を意思決定に使う話
 
 <ul>
-<li>なんか「ホワイトボックス」らしい</li>
-<li>回帰係数見ればわかるらしい</li>
+<li>回帰係数見れば世界のすべてがわかるらしい</li>
+<li>昨今知られる機械学習と比べると「ホワイトボックス」らしい</li>
 </ul></li>
 <li>前提知識: 回帰分析が分かれば大丈夫
 
@@ -3172,11 +3195,11 @@ slide:not(.current) .plotly.html-widget{
 </article></slide><slide class=""><hgroup><h2>統計モデルによる「意思決定」の話</h2></hgroup><article  id="統計モデルによる意思決定の話">
 
 <ul>
-<li>KPI、ありますか？
+<li>生きる意味、持ってますか？
 
 <ul>
-<li>売上、売上増分、ユーザ数推移……</li>
-<li>予測したり、要因を見極めたりしたい。</li>
+<li>家族、仕事、友達、R……</li>
+<li>自分の生きがいに一番寄与するものを探したい</li>
 </ul></li>
 <li>回帰分析で評価・意思決定しよう。
 
@@ -3184,55 +3207,47 @@ slide:not(.current) .plotly.html-widget{
 <li>どの変数が効くかな？
 
 <ul>
-<li>その変数を伸ばせるような施策を打とう</li>
+<li>その変数を生きがいに生きていこう</li>
 </ul></li>
 <li>「効いている」の基準: p-value?</li>
 </ul></li>
 </ul>
 
+</article></slide><slide class=""><hgroup><h2>データ</h2></hgroup><article  id="データ">
+
+<ul>
+<li>ないのでつくりました。</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>set.seed(1234)                       # お気持ちの種
+n &lt;- 1000                            # 人
+noise &lt;- rnorm(n, mean=0, sd = 0.01) # 気持ちのゆらぎ
+
+X1 &lt;- rnorm(n, mean = 0, sd = 1)     # R言語を触ることによる高揚感
+X2 &lt;- rpois(n, lambda = 2)           # 今までに買ったマンガの冊数
+X3 &lt;- rnorm(n, mean = 5, sd = 5)     # 美術館の企画展を見たときの感情指数
+X4 &lt;- X1 + noise                     # Pythonを触ることによる高揚感
+#cor(X1, X4)                          # 伏線
+# 生きがいスコア
+y &lt;- 1.2 * X1 + 0.6 * X2 + 0.3 * X3 + rnorm(n, 0, 1) # </pre>
+
 </article></slide><slide class=""><hgroup><h2>ダミーデータ</h2></hgroup><article  id="ダミーデータ">
 
 <ul>
-<li>こんな感じのデータを作る。
-
-<ul>
-<li>ダミーデータなので好きに想像してください</li>
-</ul></li>
+<li>データフレームにまとめる</li>
 </ul>
 
-<pre class = 'prettyprint lang-r'>set.seed(1234)
-n &lt;- 1000
-X1 &lt;- rnorm(n, mean = 0, sd = 1) # 例えばサイトでの商品購入金額とか
-X2 &lt;- rpois(n, lambda = 2)       # 例えば会員の直近のサイト訪問回数とか
-X3 &lt;- rnorm(n, mean = 5, sd = 5) # 例えばサイト行動指標とか
-noise &lt;- rnorm(n, mean=0, sd = 0.01) # お気持ちノイズ
-X4 &lt;- X1 + noise                 # 例えばサイトでの購入商品個数とか
-cor(X1, X4)</pre>
-
-<pre >## [1] 0.9999509</pre>
-
-<pre class = 'prettyprint lang-r'># 例えば顧客ロイヤリティスコアみたいな
-y &lt;- 1.2 * X1 + 0.6 * X2 + 0.3 * X3 + rnorm(n, 0, 1) #iid</pre>
-
-</article></slide><slide class=""><hgroup><h2>ダミーデータ</h2></hgroup><article  id="ダミーデータ-1">
-
-<ul>
-<li>データフレームにまとめる
-
-<ul>
-<li><code>target</code> : 目的変数(売上とかユーザ数とか顧客満足度とか)</li>
-<li><code>feature_x</code>: 説明変数(サイト来訪有無とか、広告反応有無とか)</li>
-</ul></li>
-</ul>
-
-<pre class = 'prettyprint lang-r'>UseData &lt;- data.frame(target = y, feature_1 = X1,
-                      feature_2 = X2,feature_3 = X3,feature_4 = X4)</pre>
+<pre class = 'prettyprint lang-r'>UseData &lt;- data.frame(IKIGAI          =  y,
+                      R_usage         = X1,
+                      MANGA_count     = X2,
+                      Museum_emotion  = X3,
+                      Python_usage    = X4)</pre>
 
 <ul>
 <li>このデータに回帰分析を適用する</li>
 </ul>
 
-</article></slide><slide class=""><hgroup><h2>今回の目的変数は……</h2></hgroup><article  id="今回の目的変数は">
+</article></slide><slide class=""><hgroup><h2>きぬいとの生きがいとは……</h2></hgroup><article  id="きぬいとの生きがいとは">
 
 <ul>
 <li>これで決まる</li>
@@ -3241,15 +3256,12 @@ y &lt;- 1.2 * X1 + 0.6 * X2 + 0.3 * X3 + rnorm(n, 0, 1) #iid</pre>
 <pre class = 'prettyprint lang-r'>y &lt;- 1.2 * X1 + 0.6 * X2 + 0.3 * X3 + rnorm(n, 0, 1) #iid</pre>
 
 <ul>
-<li>つまり、<code>feature_1</code>、<code>feature_2</code>、<code>feature_3</code>で決まる
+<li>心の声「生きがいはRとマンガと美術館じゃね？」
 
 <ul>
-<li>例えばロイヤリティはサイト購入金額と訪問回数と行動指標で決まる</li>
-</ul></li>
-<li>でも購入商品個数も効きそうだし入れようって思いがちじゃん？
-
-<ul>
-<li>使ってみような</li>
+<li><code>tidymodels</code>がきぬいとの中ではアツい</li>
+<li>最近のマンガでは『空挺ドラゴンズ』がアツいですよ。</li>
+<li>ブダペスト展、アツいですね。</li>
 </ul></li>
 </ul>
 
@@ -3259,22 +3271,21 @@ y &lt;- 1.2 * X1 + 0.6 * X2 + 0.3 * X3 + rnorm(n, 0, 1) #iid</pre>
 <li>Rでやるには<code>lm()</code>関数。
 
 <ul>
-<li><code>lm_model1</code>: <code>feature_1</code>、<code>feature_2</code>、<code>feature_3</code>のみをつかう</li>
-<li><code>lm_model2</code>: <code>feature_4</code>をくわえてみる</li>
+<li><code>lm_model1</code>: <code>R_usage</code>、<code>MANGA_count</code>、<code>Museum_emotion</code>のみをつかう</li>
+</ul></li>
+<li>でもPythonのことが気になって仕方がない
+
+<ul>
+<li>ついつい投入してしまう</li>
+<li><code>lm_model2</code>: <code>Python_usage</code>をくわえてみる</li>
 </ul></li>
 </ul>
 
-<pre class = 'prettyprint lang-r'>lm_model1 &lt;- lm(target ~ feature_1 + feature_2 + feature_3,
-                data = UseData)
-lm_model2 &lt;- lm(target ~ ., data = UseData)</pre>
-
-<ul>
-<li>結果が<code>feature_1</code>、<code>feature_2</code>、<code>feature_3</code>で説明できればOK
-
-<ul>
-<li>この3つの変数が「統計的に有意」ならちゃんと推定できている</li>
-</ul></li>
-</ul>
+<pre class = 'prettyprint lang-r'>lm_model1 &lt;- lm(IKIGAI ~   R_usage       + 
+                           MANGA_count   +
+                           Museum_emotion,
+                           data = UseData)
+lm_model2 &lt;- lm(IKIGAI ~ ., data = UseData)</pre>
 
 </article></slide><slide class=""><hgroup><h2><code>lm_model1</code>の結果</h2></hgroup><article  id="lm_model1の結果">
 
@@ -3284,11 +3295,11 @@ lm_model2 &lt;- lm(target ~ ., data = UseData)</pre>
 
 <pre class = 'prettyprint lang-r'>summary(lm_model1)$coefficients</pre>
 
-<pre >##                Estimate  Std. Error    t value      Pr(&gt;|t|)
-## (Intercept) -0.05742403 0.064743513 -0.8869464  3.753218e-01
-## feature_1    1.16169708 0.031383509 37.0161631 2.381680e-189
-## feature_2    0.61331736 0.022565386 27.1795648 3.831040e-122
-## feature_3    0.30138261 0.006064378 49.6971965 6.115019e-272</pre>
+<pre >##                  Estimate  Std. Error    t value      Pr(&gt;|t|)
+## (Intercept)    0.03058124 0.064880167  0.4713496  6.374943e-01
+## R_usage        1.16793303 0.031907039 36.6042431 1.474782e-186
+## MANGA_count    0.57796414 0.021579055 26.7835708 1.852393e-119
+## Museum_emotion 0.29863353 0.006354762 46.9936578 5.680161e-255</pre>
 
 <ul>
 <li><code>1.2 * X1 + 0.6 * X2 + 0.3 * X3 + rnorm(n, 0, 1)</code>に近い
@@ -3307,58 +3318,63 @@ lm_model2 &lt;- lm(target ~ ., data = UseData)</pre>
 
 <pre class = 'prettyprint lang-r'>summary(lm_model2)$coefficients</pre>
 
-<pre >##                Estimate Std. Error    t value      Pr(&gt;|t|)
-## (Intercept) -0.05683441 0.06492527 -0.8753819  3.815774e-01
-## feature_1    1.58647915 3.17584364  0.4995457  6.175054e-01
-## feature_2    0.61316837 0.02260398 27.1265691 9.351656e-122
-## feature_3    0.30134926 0.00607249 49.6253167 2.230870e-271
-## feature_4   -0.42482055 3.17597614 -0.1337606  8.936189e-01</pre>
+<pre >##                   Estimate  Std. Error    t value      Pr(&gt;|t|)
+## (Intercept)     0.03011091 0.064869834  0.4641742  6.426245e-01
+## R_usage         4.82927103 3.144400840  1.5358319  1.248975e-01
+## MANGA_count     0.57790823 0.021575253 26.7856987 1.906862e-119
+## Museum_emotion  0.29855188 0.006354014 46.9863419 8.036245e-255
+## Python_usage   -3.65922173 3.142421620 -1.1644592  2.445171e-01</pre>
 
 <ul>
-<li><code>feature_1</code>のスコア(上手く推定できていたら1.2)が変
+<li><code>R_usage</code>のスコア(上手く推定できていたら1.2)が変
 
 <ul>
-<li>標準誤差も大きく、統計的に有意じゃない……</li>
+<li>標準誤差も大きく、統計的にも有意じゃない……</li>
+<li>「RもPython生きがいじゃない」……？</li>
 </ul></li>
 </ul>
 
-</article></slide><slide class=""><hgroup><h2>なんで？？</h2></hgroup><article  id="なんで">
+</article></slide><slide class=""><hgroup><h2>かなしい</h2></hgroup><article  id="かなしい">
+
+<ul>
+<li>選ばれた生きがい
+
+<ul>
+<li>うず高く積まれたマンガに囲まれ</li>
+<li>週末は美術館に行く</li>
+</ul></li>
+<li>充実していなくはない
+
+<ul>
+<li>でもなぜか心に穴がぽっかり空いてしまった</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>BAD END</h2></hgroup><article  id="bad-end">
+
+</article></slide><slide class=""><hgroup><h2>原因は？</h2></hgroup><article  id="原因は">
 
 <ul>
 <li>原因は<strong>多重共線性</strong>
 
 <ul>
 <li>説明変数の中に、互いに相関の強い項目があった</li>
-<li>今回<code>X4 &lt;- X1 + noise</code>で定義。高い相関がある</li>
-</ul></li>
-<li>本来KPIを説明するのに必要なはずの変数
-
-<ul>
-<li>p-valueを基準に選ぶと失敗する。</li>
-<li>データを抜き差ししてAUCとかR-squareがどれだけ落ちるかを見るなどしよう</li>
 </ul></li>
 </ul>
 
-</article></slide><slide class=""><hgroup><h2>これがどんなときに危ない？</h2></hgroup><article  id="これがどんなときに危ない">
+<pre class = 'prettyprint lang-r'>cor(X1, X4) # 伏線回収</pre>
+
+<pre >## [1] 0.9999486</pre>
 
 <ul>
-<li>本来KPIにそれなりの寄与をしている変数を 「寄与していない」と切り捨ててしまうリスク
+<li>きぬいとはRもPythonも好きだった……</li>
+<li><p>結果推定値の標準誤差がでかくなり有意性を失う。</p></li>
+<li>本来必要なはずの変数
 
 <ul>
-<li>例えば意思決定は「セールをする」方が有効なはず
-
-<ul>
-<li>なのにコストをかけてサイトリニューアルをしてしまう。</li>
-</ul></li>
-<li>結果予測よりもロイヤリティスコアが上がらなかった(フィクション)</li>
-<li>ROIがやばい</li>
-</ul></li>
-<li>回帰分析は回帰係数の存在が便利
-
-<ul>
-<li>でもその係数本当に「妥当」ですか？</li>
-<li>いろんなバイアス・罠がある</li>
-<li>ただ回した結果で議論するのは実際危険</li>
+<li>p-valueを基準に選ぶと失敗する(こともある)</li>
+<li>データを多角的にみてあげよう</li>
+<li>「回帰係数で変数の影響度解釈していいの？」という話はまた別の機会に。</li>
 </ul></li>
 </ul>
 
@@ -3372,15 +3388,8 @@ lm_model2 &lt;- lm(target ~ ., data = UseData)</pre>
 <li>結果を疑おう。
 
 <ul>
-<li>どうしてこうなった</li>
-<li>ちょっと考えれば金額と個数の相関は気づける(はず)</li>
+<li>ちょっと考えれば<strong>RもPythonも等しく愛せること</strong>に気付けるはず</li>
 </ul></li>
-</ul></li>
-<li>説明変数の間の相関には気をつけよう
-
-<ul>
-<li>相関行列は必ず見よう</li>
-<li>VIFとか見よう(詳しくはググってね)</li>
 </ul></li>
 <li>p-valueを過信しないようにしよう
 
@@ -3391,17 +3400,23 @@ lm_model2 &lt;- lm(target ~ ., data = UseData)</pre>
 <li>「回帰係数は0じゃないことはわかる」だけ。</li>
 </ul></li>
 </ul></li>
+<li>生きがいを探そう</li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2>Enjoy!</h2></hgroup><article  id="enjoy">
 
 <ul>
+<li>何かを決めるのは難しい
+
+<ul>
+<li>難しいけど<a href='https://www.wantedly.com/users/70198846' title=''>Wantedly貼っとくわ</a></li>
+</ul></li>
 <li>真面目な話をしてしまった
 
 <ul>
-<li><a href='http://socinuit.hatenablog.com/entry/2019/12/21/042023' title=''>この先の話はブログで書いた</a></li>
-<li><a href='http://socinuit.hatenablog.com/entry/2019/12/19/132851' title=''>正則化回帰の話もブログで書いた</a></li>
-<li><a href='http://socinuit.hatenablog.com/entry/2019/12/06/015140' title=''>Lasso楽しいブログも書いた</a></li>
+<li>この先の話は<a href='http://socinuit.hatenablog.com/entry/2019/12/21/042023' title=''>ブログで書いた</a></li>
+<li>正則化回帰の話も<a href='http://socinuit.hatenablog.com/entry/2019/12/19/132851' title=''>ブログで書いた</a></li>
+<li>Lasso楽しい<a href='http://socinuit.hatenablog.com/entry/2019/12/06/015140' title=''>ブログも書いた</a></li>
 <li>次があれば面白い話をします</li>
 </ul></li>
 </ul></article></slide>
