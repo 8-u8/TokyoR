@@ -1,0 +1,88 @@
+---
+title: "Base for BeginneRs"
+author: "Takafumi Ito"
+format: revealjs
+editor: visual
+---
+
+## 誰？
+<div align="left">
+<img src=https://pbs.twimg.com/profile_images/1049991126000660482/IjnuDedI_400x400.jpg width="20%">
+
+- [きぬいと](https://twitter.com/0_u0)
+  - 社会人6年目になり、管理職となってしまった。
+  - マーケティングリサーチ→マーケティングコンサル
+  - 一緒に仕事したい人を探しています
+
+
+## おしらせ
+- `base`でやる上でやや強引な解釈をしている部分がある
+  - ゆるして
+
+
+## この報告でやること
+
+- あえて`tidyverse`を使わずにRを学びたい。
+- `tidymodels`も使わずにRをやっていきたい
+- なぜ今`base`なのか？
+  - すべてのRユーザーにとって不可欠な教養であるから
+
+## こんなRの本がある
+
+<div align="center">
+<img src=https://m.media-amazon.com/images/I/41kTju67OUL._SX350_BO1,204,203,200_.jpg width="25%">
+
+<div align="left">
+<span style="font-size:75%">
+[Rによる実践的マーケティングリサーチと分析](https://amzn.asia/d/cmFVSQi)の冒頭
+
+> <span style="font-size: 50%;line-height: 1em;">
+`base` Rの能力はすべてのRユーザーにとって不可欠なので学ぶ必要があります </p>
+`base` Rによるコードは`tidyverse`によるものほど簡潔でないかもしれませんが、それは常に機能します(p9)</p>
+</span>
+
+## `base` Rの能力は
+<span style="font-size:150%; color:red;"><div align="center"><u>
+すべてのRユーザーにとって  
+不可欠なので  
+学ぶ必要があります
+</u></span>
+
+## Rの文法は
+- `{オブジェクト名} <- {関数}`が基本。  
+
+## Rを始める前に
+- Rprojを作ろう
+
+## Rのコーディングの本質は`<-`である
+- もちろんこれ以外にも色々あるが、これがわかるだけでRは9割書ける
+- たとえば`Ans <- 1 + 2`は  
+  「1+2(の計算結果)を`Ans`に格納する」という意味
+
+## ファイルの読み込み
+- `base`でのファイル読み込みは`read.csv`。
+  - これはcsvファイルならデータをDLしていなくても  
+  データを読み込める
+- [COVID-19の国内感染データ](https://www.mhlw.go.jp/stf/covid-19/open-data.html)をURLから直接読み込む
+  - https://www.mhlw.go.jp/stf/covid-19/open-data.html を頑張って直打ちだ。
+  - 安直に`covid_data`と名付けてあげよう
+
+## ファイルの読み込み
+- covid_dataにはこんなデータが入っている。
+```{r echo = TRUE}
+# データを読み込む
+covid_data <- read.csv("https://covid19.mhlw.go.jp/public/opendata/newly_confirmed_cases_daily.csv")
+print(paste0("data class: ", class(covid_data)))
+# [行の範囲:列の範囲]で好きなところを表示
+# 1～5行めと、1～10列目を表示する
+covid_data[1:5,1:10]
+```
+## トライ
+1. `covid_data`の10～13行目、40列～47列目を表示しよう。
+
+
+## このスライドは
+
+-   Quartoで記述しています。
+    -   なんかいいドキュメンテーションライブラリ
+    -   Pythonとかも書いてやっていけるので楽しい。
