@@ -127,11 +127,12 @@ summary(usedata)
 
 ## データの分布を見る`hist`
 
--   確認程度なら`graphics`で十分だと思う。
+-   `par(mfrow=c(縦,横))`でグラフを並べられます
 
 ```{r echo = TRUE}
-
-hist(usedata$age, breaks = 30)
+par(mfrow = c(1,2))
+hist(usedata$store.spend, breaks = 30, main = "店舗支払い")
+hist(usedata$online.spend, breaks = 30, main = "EC支払い")
 
 ```
 
@@ -152,9 +153,13 @@ head(usedata[, c("age", "ages")])
 ## データの関連を見る`plot`
 
 -   2つの変数の関係性を見たいなら`plot`
+- あんまり違いがでない(あるある)
 
 ```{r echo = TRUE}
-plot(x = usedata$age, y = usedata$credit.score)
+par(mfrow = c(1,2))
+plot(x = usedata$age, y = usedata$store.score, main = "年齢×店舗支払い")
+plot(x = usedata$age, y = usedata$online.score, main = "年齢×EC支払い")
+
 
 ```
 
@@ -186,7 +191,7 @@ cor.test(usedata$age, usedata$credit.score)
 
 ## 相関
 
--   複数の変数それぞれの相関を見たい場合、`cor`で一発。
+-   複数の変数それぞれの相関を見たい場合も`cor`。
 
 ```{r echo = TRUE}
 usecols <- colnames(usedata[, c(2, 3, 5:10)])
