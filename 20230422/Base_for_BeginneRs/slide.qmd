@@ -10,7 +10,6 @@ editor: visual
 ## 誰？
 
 <div align="left">
-
 <img src="https://pbs.twimg.com/profile_images/1049991126000660482/IjnuDedI_400x400.jpg" width="20%"/>
 
 -   [きぬいと](https://twitter.com/0_u0)
@@ -38,17 +37,21 @@ editor: visual
 > </p>
 > </span>
 
-## 
+## 御託 
 
--   多くの便利なパッケージは{base}な文法で記述
-    -   初心者を抜け出したらきっと関数の中身を読むと思う
--   tidyverseで関数を作ろうとすると、ちょっとめんどくさい配慮がいる。
-    -   自分で関数を作る場合にも`base`で書いたほうが楽
+- すべてのRユーザーにとって不可欠ならやるしかない(？)
+-   多くの便利なパッケージは`base`な文法で記述
+    -   たとえば[ynakahashi](https://ushi-goroshi.hatenablog.com/entry/2018/09/11/215515)さんのブログなどを見るとたのしい
+-   自分で関数を作る場合は`base`な文法がオススメ
+    -   tidyverseで関数を作ろうとすると、\
+        いくつか応用的な理解が必要。
+- PythonやJuliaなどにも興味があるなら割と馴染む書き方  
+(個人の見解)
 
 ## 御託はここまで
 
 -   「統計学」つってるけど多変量解析も検定もないです。
--   時間もそんなないので全部は見ない。トピックだけ。
+-   とにかくこの辺書ければなんとかなるみたいなのを見ていく
 
 ## 使用するデータ
 
@@ -66,9 +69,9 @@ editor: visual
 
 ```{r echo = TRUE}
 usedata <- read.csv(
-  # csvファイルならURL突っ込んでも持ってこれるよ
-  "http://r-marketing.r-forge.r-project.org/data/rintro-chapter4.csv",
-  stringsAsFactors = TRUE)
+    #csvファイルならURL突っ込んでも持ってこれるよ
+    "http://r-marketing.r-forge.r-project.org/data/rintro-chapter4.csv",
+    stringsAsFactors = TRUE)
 head(usedata, n = 5) # 先頭5行だけ見る
 ```
 
@@ -76,12 +79,12 @@ head(usedata, n = 5) # 先頭5行だけ見る
 
 - 基本的なデータの規模(行数、列数)の確認
 - 変数名もあらかじめ確認しておくと良い
-  - 日本語の場合は文字列の`"."`への置換が  
+  - 日本語の場合は文字化けや、文字列の`"."`への置換が  
   起きていることもあるので、確認したほうが安全
 
 ```{r echo = TRUE}
 dim(usedata) # dimentionの略
-colnames(usedata) # names of columns
+colnames(usedata) # columns names
 ```
 
 ## データの確認2: 合計金額
@@ -91,11 +94,13 @@ colnames(usedata) # names of columns
 -   だいたいこれらは「合計」を見て意思決定をしたくなる
     -   平均でも良いが、平均の定義上「合計」があれば計算できる
 -   後々年齢とかDMの有無とかで分解したくなってくる
-    -   データを絞り込まない限りは必ず合計はある1つの値になるはず
+    -   データを絞り込まない限りは必ず合計は同じ値になるはず
+    -   ミスがないかどうかのベンチマークになるよね
 
 ## データの確認2: 合計金額
 
 -   というわけで合計金額は控えておくと良い。
+
 
 ```{r echo=TRUE}
 online_spend_sum <- sum(usedata$online.spend)
@@ -141,7 +146,7 @@ usedata$ages <- paste0((usedata$age %/% 10) * 10, "代")
 
 # 実は$だけじゃなくてこういう形でも変数を表記できる
 # pandasっぽくてわかりやすいこともある
-head(usedata[, c("age","ages")])
+head(usedata[, c("age", "ages")])
 ```
 
 ## データの関連を見る`plot`
@@ -161,10 +166,10 @@ plot(x = usedata$age, y = usedata$credit.score)
 ```{r echo=TRUE}
 cross_table <- table(usedata$ages, usedata$email)
 # roundで丸めができる(四捨五入ではないので注意)。
-cross_table_p_col <- round(cross_table / colSums(cross_table), 2) #縦%
-cross_table_p_row <- round(cross_table / rowSums(cross_table), 2) #横%
+cross_table_p_col <- round(cross_table / colSums(cross_table), 2) # 縦%
+cross_table_p_row <- round(cross_table / rowSums(cross_table), 2) # 横%
 
-cbind(cross_table,cross_table_p_col, cross_table_p_row)
+cbind(cross_table, cross_table_p_col, cross_table_p_row)
 
 ```
 
@@ -184,7 +189,7 @@ cor.test(usedata$age, usedata$credit.score)
 -   複数の変数それぞれの相関を見たい場合、`cor`で一発。
 
 ```{r echo = TRUE}
-usecols <- colnames(usedata[,c(2,3,5:10)])
+usecols <- colnames(usedata[, c(2, 3, 5:10)])
 cor(usedata[, usecols])
 ```
 
@@ -196,13 +201,14 @@ cor(usedata[, usecols])
 ```{r echo = TRUE}
 # byの中に複数の変数を入れてもOK
 online_spend_by_ages <- aggregate(usedata$online.spend,
-                                  by = list(usedata$ages), sum)
+by = list(usedata$ages), sum
+)
 print(online_spend_by_ages)
-sum(online_spend_by_ages[,2])
+sum(online_spend_by_ages[, 2])
 
 ```
 
--   冒頭確認した値と一致するのも確認できると100点。
+-   さっき見た金額合計と一致するのを確認できる。
 
 ## 実務に連動した変換
 
@@ -224,13 +230,15 @@ plot(usedata$distance.to.store, usedata$store.spend)
 -   距離の逆数との相関を取ってみる
 
 ```{r echo = TRUE}
-cor(x = 1/usedata$distance.to.store, y = usedata$store.trans)
+cor(x = 1 / usedata$distance.to.store, y = usedata$store.trans)
 
 ```
 
 ```{r echo = TRUE}
-plot(x = 1/usedata$distance.to.store, y = usedata$store.spend,
-     xlab = "1 / 店舗までの距離", ylab = "店舗での支出額")
+plot(
+    1 / usedata$distance.to.store, y = usedata$store.spend,
+xlab = "1 / 店舗までの距離", ylab = "店舗での支出額"
+)
 ```
 
 ## 実務に連動した変換
@@ -248,11 +256,11 @@ plot(x = 1/usedata$distance.to.store, y = usedata$store.spend,
 -   例えば相関行列は簡単にcsv出力可能
 
 ```{r echo = TRUE}
-cor_mat <- cor(usedata[,usecols])
+cor_mat <- cor(usedata[, usecols])
 write.csv(cor_mat, "./output/cor_matrix.csv",
           row.names = FALSE,
           fileEncoding = "CP932" # Windowsでは推奨
-          )
+)
 
 ```
 
@@ -266,6 +274,7 @@ write.csv(cor_mat, "./output/cor_matrix.csv",
 
 -   `list`型に関数を格納して`apply`をやると実行可能
 
+
 ```{r echo = TRUE}
 func_list <- list(
   func_min = function(x){min(x, na.rm = TRUE)},
@@ -276,7 +285,6 @@ func_list <- list(
   func_max = function(x){max(x, na.rm = TRUE)},
   func_nas = function(x){sum(is.na(x))}
 )
-
 make_summary <- function(df){
   # 数値型に絞る
   tmp_df <- df[, sapply(df, is.numeric)] # apply系は応用編。
@@ -303,19 +311,20 @@ make_summary(usedata)
 ```
 
 ## まとめ
-- `tidyverse`を使わなくても(割と)できることがある
-  - この書き方に慣れると、いろんなヘルプが読めるようになる
+- `base`な書き方で基本的な集計を楽しもう
+  - 簡単な確認くらいなら慣れたらこっちのほうが速い
 - ただデータを眺めるだけでも示唆が得られるが、  
 現実に合わせて数値の変換を考えられるとより洞察が深まることもある
   - 割とこのあたり簡単な算数で表現できがち
 - 関数は`base`で書くと常に機能する
+- とはいえお仕事ではいろんなものに世話になる→
 
 ## お仕事でお世話になるシリーズ①
 
 -   `tidyverse`
     -   操作の直感性が高い。ググれば使い方がいっぱい
 -   `data.table`
-    -   クセがあるけどこっちも速い。
+    -   クセがあるけど大規模なデータの処理が得意
     -   [Uryuさん](https://speakerdeck.com/s_uryu/datatable1130)のスライドを見るといい
 -   `summarytools`
     -   `summary`をよりきれいにわかりやすく出してくれる
@@ -334,3 +343,5 @@ make_summary(usedata)
 -   Quartoで記述しています。
     -   なんかいいドキュメンテーションライブラリ
     -   Pythonとかも書いてやっていけるので楽しい。
+
+##  Enjoy!

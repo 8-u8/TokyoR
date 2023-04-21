@@ -402,7 +402,6 @@ Kien Y. Knot
 <section id="誰" class="slide level2">
 <h2>誰？</h2>
 <div align="left">
-
 <p><img src="https://pbs.twimg.com/profile_images/1049991126000660482/IjnuDedI_400x400.jpg" width="20%"></p>
 <ul>
 <li><a href="https://twitter.com/0_u0">きぬいと</a>
@@ -435,24 +434,28 @@ Kien Y. Knot
 <p></p>
 </span></blockquote>
 </div></div></section>
-<section id="section" class="slide level2">
-<h2></h2>
+<section id="御託" class="slide level2">
+<h2>御託</h2>
 <ul>
-<li>多くの便利なパッケージは{base}な文法で記述
+<li>すべてのRユーザーにとって不可欠ならやるしかない(？)</li>
+<li>多くの便利なパッケージは<code>base</code>な文法で記述
 <ul>
-<li>初心者を抜け出したらきっと関数の中身を読むと思う</li>
+<li>たとえば<a href="https://ushi-goroshi.hatenablog.com/entry/2018/09/11/215515">ynakahashi</a>さんのブログなどを見るとたのしい</li>
 </ul></li>
-<li>tidyverseで関数を作ろうとすると、ちょっとめんどくさい配慮がいる。
+<li>自分で関数を作る場合は<code>base</code>な文法がオススメ
 <ul>
-<li>自分で関数を作る場合にも<code>base</code>で書いたほうが楽</li>
+<li>tidyverseで関数を作ろうとすると、<br>
+いくつか応用的な理解が必要。</li>
 </ul></li>
+<li>PythonやJuliaなどにも興味があるなら割と馴染む書き方<br>
+(個人の見解)</li>
 </ul>
 </section>
 <section id="御託はここまで" class="slide level2">
 <h2>御託はここまで</h2>
 <ul>
 <li>「統計学」つってるけど多変量解析も検定もないです。</li>
-<li>時間もそんなないので全部は見ない。トピックだけ。</li>
+<li>とにかくこの辺書ければなんとかなるみたいなのを見ていく</li>
 </ul>
 </section>
 <section id="使用するデータ" class="slide level2">
@@ -475,9 +478,9 @@ Kien Y. Knot
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>usedata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  <span class="co"># csvファイルならURL突っ込んでも持ってこれるよ</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a>  <span class="st">"http://r-marketing.r-forge.r-project.org/data/rintro-chapter4.csv"</span>,</span>
-<span id="cb1-4"><a href="#cb1-4"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>    <span class="co">#csvファイルならURL突っ込んでも持ってこれるよ</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>    <span class="st">"http://r-marketing.r-forge.r-project.org/data/rintro-chapter4.csv"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="fu">head</span>(usedata, <span class="at">n =</span> <span class="dv">5</span>) <span class="co"># 先頭5行だけ見る</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  cust.id      age credit.score email distance.to.store online.visits
@@ -501,7 +504,7 @@ Kien Y. Knot
 <li>基本的なデータの規模(行数、列数)の確認</li>
 <li>変数名もあらかじめ確認しておくと良い
 <ul>
-<li>日本語の場合は文字列の<code>"."</code>への置換が<br>
+<li>日本語の場合は文字化けや、文字列の<code>"."</code>への置換が<br>
 起きていることもあるので、確認したほうが安全</li>
 </ul></li>
 </ul>
@@ -510,7 +513,7 @@ Kien Y. Knot
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1000   12</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">colnames</span>(usedata) <span class="co"># names of columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">colnames</span>(usedata) <span class="co"># columns names</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "cust.id"           "age"               "credit.score"     
  [4] "email"             "distance.to.store" "online.visits"    
@@ -532,7 +535,8 @@ Kien Y. Knot
 </ul></li>
 <li>後々年齢とかDMの有無とかで分解したくなってくる
 <ul>
-<li>データを絞り込まない限りは必ず合計はある1つの値になるはず</li>
+<li>データを絞り込まない限りは必ず合計は同じ値になるはず</li>
+<li>ミスがないかどうかのベンチマークになるよね</li>
 </ul></li>
 </ul>
 </section>
@@ -621,7 +625,7 @@ ECが多めという示唆も得られる。こういうことの積み重ね。
 <span id="cb12-3"><a href="#cb12-3"></a></span>
 <span id="cb12-4"><a href="#cb12-4"></a><span class="co"># 実は$だけじゃなくてこういう形でも変数を表記できる</span></span>
 <span id="cb12-5"><a href="#cb12-5"></a><span class="co"># pandasっぽくてわかりやすいこともある</span></span>
-<span id="cb12-6"><a href="#cb12-6"></a><span class="fu">head</span>(usedata[, <span class="fu">c</span>(<span class="st">"age"</span>,<span class="st">"ages"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="fu">head</span>(usedata[, <span class="fu">c</span>(<span class="st">"age"</span>, <span class="st">"ages"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       age ages
 1 22.89437 20代
@@ -650,10 +654,10 @@ ECが多めという示唆も得られる。こういうことの積み重ね。
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>cross_table <span class="ot">&lt;-</span> <span class="fu">table</span>(usedata<span class="sc">$</span>ages, usedata<span class="sc">$</span>email)</span>
 <span id="cb15-2"><a href="#cb15-2"></a><span class="co"># roundで丸めができる(四捨五入ではないので注意)。</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a>cross_table_p_col <span class="ot">&lt;-</span> <span class="fu">round</span>(cross_table <span class="sc">/</span> <span class="fu">colSums</span>(cross_table), <span class="dv">2</span>) <span class="co">#縦%</span></span>
-<span id="cb15-4"><a href="#cb15-4"></a>cross_table_p_row <span class="ot">&lt;-</span> <span class="fu">round</span>(cross_table <span class="sc">/</span> <span class="fu">rowSums</span>(cross_table), <span class="dv">2</span>) <span class="co">#横%</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a>cross_table_p_col <span class="ot">&lt;-</span> <span class="fu">round</span>(cross_table <span class="sc">/</span> <span class="fu">colSums</span>(cross_table), <span class="dv">2</span>) <span class="co"># 縦%</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a>cross_table_p_row <span class="ot">&lt;-</span> <span class="fu">round</span>(cross_table <span class="sc">/</span> <span class="fu">rowSums</span>(cross_table), <span class="dv">2</span>) <span class="co"># 横%</span></span>
 <span id="cb15-5"><a href="#cb15-5"></a></span>
-<span id="cb15-6"><a href="#cb15-6"></a><span class="fu">cbind</span>(cross_table,cross_table_p_col, cross_table_p_row)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-6"><a href="#cb15-6"></a><span class="fu">cbind</span>(cross_table, cross_table_p_col, cross_table_p_row)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      no yes   no  yes   no  yes
 10代   0   2 0.00 0.00 0.00 1.00
@@ -697,7 +701,7 @@ sample estimates:
 <li>複数の変数それぞれの相関を見たい場合、<code>cor</code>で一発。</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>usecols <span class="ot">&lt;-</span> <span class="fu">colnames</span>(usedata[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span><span class="sc">:</span><span class="dv">10</span>)])</span>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>usecols <span class="ot">&lt;-</span> <span class="fu">colnames</span>(usedata[, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span><span class="sc">:</span><span class="dv">10</span>)])</span>
 <span id="cb21-2"><a href="#cb21-2"></a><span class="fu">cor</span>(usedata[, usecols])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                           age credit.score distance.to.store online.visits
@@ -730,8 +734,9 @@ store.spend        -0.05224465 -0.051690053  0.89275685  1.000000000</code></pre
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># byの中に複数の変数を入れてもOK</span></span>
 <span id="cb23-2"><a href="#cb23-2"></a>online_spend_by_ages <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(usedata<span class="sc">$</span>online.spend,</span>
-<span id="cb23-3"><a href="#cb23-3"></a>                                  <span class="at">by =</span> <span class="fu">list</span>(usedata<span class="sc">$</span>ages), sum)</span>
-<span id="cb23-4"><a href="#cb23-4"></a><span class="fu">print</span>(online_spend_by_ages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="at">by =</span> <span class="fu">list</span>(usedata<span class="sc">$</span>ages), sum</span>
+<span id="cb23-4"><a href="#cb23-4"></a>)</span>
+<span id="cb23-5"><a href="#cb23-5"></a><span class="fu">print</span>(online_spend_by_ages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Group.1         x
 1    10代      0.00
@@ -740,13 +745,13 @@ store.spend        -0.05224465 -0.051690053  0.89275685  1.000000000</code></pre
 4    40代  17539.49
 5    50代      0.00</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">sum</span>(online_spend_by_ages[,<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">sum</span>(online_spend_by_ages[, <span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 170318.2</code></pre>
 </div>
 </div>
 <ul>
-<li>冒頭確認した値と一致するのも確認できると100点。</li>
+<li>さっき見た金額合計と一致するのを確認できる。</li>
 </ul>
 </section>
 <section id="実務に連動した変換" class="slide level2">
@@ -776,14 +781,16 @@ store.spend        -0.05224465 -0.051690053  0.89275685  1.000000000</code></pre
 <li>距離の逆数との相関を取ってみる</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">cor</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">/</span>usedata<span class="sc">$</span>distance.to.store, <span class="at">y =</span> usedata<span class="sc">$</span>store.trans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">cor</span>(<span class="at">x =</span> <span class="dv">1</span> <span class="sc">/</span> usedata<span class="sc">$</span>distance.to.store, <span class="at">y =</span> usedata<span class="sc">$</span>store.trans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.4656151</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">plot</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">/</span>usedata<span class="sc">$</span>distance.to.store, <span class="at">y =</span> usedata<span class="sc">$</span>store.spend,</span>
-<span id="cb30-2"><a href="#cb30-2"></a>     <span class="at">xlab =</span> <span class="st">"1 / 店舗までの距離"</span>, <span class="at">ylab =</span> <span class="st">"店舗での支出額"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">plot</span>(</span>
+<span id="cb30-2"><a href="#cb30-2"></a>    <span class="dv">1</span> <span class="sc">/</span> usedata<span class="sc">$</span>distance.to.store, <span class="at">y =</span> usedata<span class="sc">$</span>store.spend,</span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="at">xlab =</span> <span class="st">"1 / 店舗までの距離"</span>, <span class="at">ylab =</span> <span class="st">"店舗での支出額"</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="slide_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
@@ -810,11 +817,11 @@ store.spend        -0.05224465 -0.051690053  0.89275685  1.000000000</code></pre
 <li>例えば相関行列は簡単にcsv出力可能</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>cor_mat <span class="ot">&lt;-</span> <span class="fu">cor</span>(usedata[,usecols])</span>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>cor_mat <span class="ot">&lt;-</span> <span class="fu">cor</span>(usedata[, usecols])</span>
 <span id="cb31-2"><a href="#cb31-2"></a><span class="fu">write.csv</span>(cor_mat, <span class="st">"./output/cor_matrix.csv"</span>,</span>
 <span id="cb31-3"><a href="#cb31-3"></a>          <span class="at">row.names =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb31-4"><a href="#cb31-4"></a>          <span class="at">fileEncoding =</span> <span class="st">"CP932"</span> <span class="co"># Windowsでは推奨</span></span>
-<span id="cb31-5"><a href="#cb31-5"></a>          )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-5"><a href="#cb31-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="summaryは曲者" class="slide level2">
@@ -842,22 +849,21 @@ store.spend        -0.05224465 -0.051690053  0.89275685  1.000000000</code></pre
 <span id="cb32-7"><a href="#cb32-7"></a>  <span class="at">func_max =</span> <span class="cf">function</span>(x){<span class="fu">max</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)},</span>
 <span id="cb32-8"><a href="#cb32-8"></a>  <span class="at">func_nas =</span> <span class="cf">function</span>(x){<span class="fu">sum</span>(<span class="fu">is.na</span>(x))}</span>
 <span id="cb32-9"><a href="#cb32-9"></a>)</span>
-<span id="cb32-10"><a href="#cb32-10"></a></span>
-<span id="cb32-11"><a href="#cb32-11"></a>make_summary <span class="ot">&lt;-</span> <span class="cf">function</span>(df){</span>
-<span id="cb32-12"><a href="#cb32-12"></a>  <span class="co"># 数値型に絞る</span></span>
-<span id="cb32-13"><a href="#cb32-13"></a>  tmp_df <span class="ot">&lt;-</span> df[, <span class="fu">sapply</span>(df, is.numeric)] <span class="co"># apply系は応用編。</span></span>
-<span id="cb32-14"><a href="#cb32-14"></a>  idx <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Min"</span>, <span class="st">"1st_Qu"</span>, <span class="st">"Median"</span>, <span class="st">"Mean"</span>, <span class="st">"3rd_Qu"</span>, <span class="st">"Max"</span>, <span class="st">"NAs"</span>)</span>
-<span id="cb32-15"><a href="#cb32-15"></a>  out <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb32-16"><a href="#cb32-16"></a>    <span class="at">row.names =</span> idx,</span>
-<span id="cb32-17"><a href="#cb32-17"></a>    <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="fu">length</span>(idx), <span class="fu">ncol</span>(tmp_df))</span>
-<span id="cb32-18"><a href="#cb32-18"></a>  )</span>
-<span id="cb32-19"><a href="#cb32-19"></a>  <span class="fu">colnames</span>(out) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(tmp_df)</span>
-<span id="cb32-20"><a href="#cb32-20"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(idx)){</span>
-<span id="cb32-21"><a href="#cb32-21"></a>    tmp_func <span class="ot">&lt;-</span> func_list[[i]]</span>
-<span id="cb32-22"><a href="#cb32-22"></a>    out[i, ] <span class="ot">&lt;-</span> <span class="fu">apply</span>(tmp_df, <span class="dv">2</span>, <span class="cf">function</span>(x){<span class="fu">tmp_func</span>(x)})</span>
-<span id="cb32-23"><a href="#cb32-23"></a>  }</span>
-<span id="cb32-24"><a href="#cb32-24"></a>  <span class="fu">return</span>(out)</span>
-<span id="cb32-25"><a href="#cb32-25"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-10"><a href="#cb32-10"></a>make_summary <span class="ot">&lt;-</span> <span class="cf">function</span>(df){</span>
+<span id="cb32-11"><a href="#cb32-11"></a>  <span class="co"># 数値型に絞る</span></span>
+<span id="cb32-12"><a href="#cb32-12"></a>  tmp_df <span class="ot">&lt;-</span> df[, <span class="fu">sapply</span>(df, is.numeric)] <span class="co"># apply系は応用編。</span></span>
+<span id="cb32-13"><a href="#cb32-13"></a>  idx <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Min"</span>, <span class="st">"1st_Qu"</span>, <span class="st">"Median"</span>, <span class="st">"Mean"</span>, <span class="st">"3rd_Qu"</span>, <span class="st">"Max"</span>, <span class="st">"NAs"</span>)</span>
+<span id="cb32-14"><a href="#cb32-14"></a>  out <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb32-15"><a href="#cb32-15"></a>    <span class="at">row.names =</span> idx,</span>
+<span id="cb32-16"><a href="#cb32-16"></a>    <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="fu">length</span>(idx), <span class="fu">ncol</span>(tmp_df))</span>
+<span id="cb32-17"><a href="#cb32-17"></a>  )</span>
+<span id="cb32-18"><a href="#cb32-18"></a>  <span class="fu">colnames</span>(out) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(tmp_df)</span>
+<span id="cb32-19"><a href="#cb32-19"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(idx)){</span>
+<span id="cb32-20"><a href="#cb32-20"></a>    tmp_func <span class="ot">&lt;-</span> func_list[[i]]</span>
+<span id="cb32-21"><a href="#cb32-21"></a>    out[i, ] <span class="ot">&lt;-</span> <span class="fu">apply</span>(tmp_df, <span class="dv">2</span>, <span class="cf">function</span>(x){<span class="fu">tmp_func</span>(x)})</span>
+<span id="cb32-22"><a href="#cb32-22"></a>  }</span>
+<span id="cb32-23"><a href="#cb32-23"></a>  <span class="fu">return</span>(out)</span>
+<span id="cb32-24"><a href="#cb32-24"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="結果" class="slide level2">
@@ -898,9 +904,9 @@ NAs       341.000000</code></pre>
 <section id="まとめ" class="slide level2">
 <h2>まとめ</h2>
 <ul>
-<li><code>tidyverse</code>を使わなくても(割と)できることがある
+<li><code>base</code>な書き方で基本的な集計を楽しもう
 <ul>
-<li>この書き方に慣れると、いろんなヘルプが読めるようになる</li>
+<li>簡単な確認くらいなら慣れたらこっちのほうが速い</li>
 </ul></li>
 <li>ただデータを眺めるだけでも示唆が得られるが、<br>
 現実に合わせて数値の変換を考えられるとより洞察が深まることもある
@@ -908,6 +914,7 @@ NAs       341.000000</code></pre>
 <li>割とこのあたり簡単な算数で表現できがち</li>
 </ul></li>
 <li>関数は<code>base</code>で書くと常に機能する</li>
+<li>とはいえお仕事ではいろんなものに世話になる→</li>
 </ul>
 </section>
 <section id="お仕事でお世話になるシリーズ①" class="slide level2">
@@ -919,7 +926,7 @@ NAs       341.000000</code></pre>
 </ul></li>
 <li><code>data.table</code>
 <ul>
-<li>クセがあるけどこっちも速い。</li>
+<li>クセがあるけど大規模なデータの処理が得意</li>
 <li><a href="https://speakerdeck.com/s_uryu/datatable1130">Uryuさん</a>のスライドを見るといい</li>
 </ul></li>
 <li><code>summarytools</code>
@@ -950,6 +957,9 @@ NAs       341.000000</code></pre>
 <li>Pythonとかも書いてやっていけるので楽しい。</li>
 </ul></li>
 </ul>
+</section>
+<section id="enjoy" class="slide level2">
+<h2>Enjoy!</h2>
 <div class="footer footer-default">
 
 </div>
