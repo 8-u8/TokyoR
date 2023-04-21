@@ -814,99 +814,49 @@ store.spend        -0.05224465 -0.051690053  0.89275685  1.000000000</code></pre
 </ul></li>
 </ul>
 </section>
-<section id="csv出力" class="slide level2">
-<h2>csv出力</h2>
+<section id="回帰分析lm" class="slide level2">
+<h2>回帰分析<code>lm</code></h2>
 <ul>
-<li>csvに出力してExcelで加工したい場合がある</li>
-<li>例えば相関行列は簡単にcsv出力可能</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>cor_mat <span class="ot">&lt;-</span> <span class="fu">cor</span>(usedata[, usecols])</span>
-<span id="cb31-2"><a href="#cb31-2"></a><span class="fu">write.csv</span>(cor_mat, <span class="st">"./output/cor_matrix.csv"</span>,</span>
-<span id="cb31-3"><a href="#cb31-3"></a>          <span class="at">row.names =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb31-4"><a href="#cb31-4"></a>          <span class="at">fileEncoding =</span> <span class="st">"CP932"</span> <span class="co"># Windowsでは推奨</span></span>
-<span id="cb31-5"><a href="#cb31-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="summaryは曲者" class="slide level2">
-<h2><code>summary</code>は曲者</h2>
+<li>「統計学」っぽいことも試して終わろう。</li>
+<li>DMによる施策でどれだけオンライン訪問が増えたか確かめたい
 <ul>
-<li><code>summary</code>は明らかに出力に向いていない。 <img data-src="https://github.com/8-u8/TokyoR/blob/master/20230422/Base_for_BeginneRs/output/summary_top.png"></li>
-<li>どうにかスプレッドシート形式に適した形にできないか？
-<ul>
-<li>1つ1つ計算するのもいいが、せっかくなら楽をしたい</li>
+<li>施策の効果検証でよくある枠組み。</li>
 </ul></li>
-</ul>
-</section>
-<section id="応用summaryっぽいものを出す例" class="slide level2">
-<h2>【応用】<code>summary</code>っぽいものを出す例</h2>
-<ul>
-<li>難しいのでとりあえず「やるとできる」と覚えて</li>
+<li><code>formula</code>という記法<code>y ~ x</code>でモデル式を書く。</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>func_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb32-2"><a href="#cb32-2"></a>  <span class="at">func_min =</span> <span class="cf">function</span>(x){<span class="fu">min</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)},</span>
-<span id="cb32-3"><a href="#cb32-3"></a>  <span class="at">func_1qu =</span> <span class="cf">function</span>(x){<span class="fu">quantile</span>(x, <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)},</span>
-<span id="cb32-4"><a href="#cb32-4"></a>  <span class="at">func_med =</span> <span class="cf">function</span>(x){<span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)},</span>
-<span id="cb32-5"><a href="#cb32-5"></a>  <span class="at">func_ave =</span> <span class="cf">function</span>(x){<span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)},</span>
-<span id="cb32-6"><a href="#cb32-6"></a>  <span class="at">func_3qu =</span> <span class="cf">function</span>(x){<span class="fu">quantile</span>(x, <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)},</span>
-<span id="cb32-7"><a href="#cb32-7"></a>  <span class="at">func_max =</span> <span class="cf">function</span>(x){<span class="fu">max</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)},</span>
-<span id="cb32-8"><a href="#cb32-8"></a>  <span class="at">func_nas =</span> <span class="cf">function</span>(x){<span class="fu">sum</span>(<span class="fu">is.na</span>(x))}</span>
-<span id="cb32-9"><a href="#cb32-9"></a>)</span>
-<span id="cb32-10"><a href="#cb32-10"></a>make_summary <span class="ot">&lt;-</span> <span class="cf">function</span>(df){</span>
-<span id="cb32-11"><a href="#cb32-11"></a>  <span class="co"># 数値型に絞る</span></span>
-<span id="cb32-12"><a href="#cb32-12"></a>  tmp_df <span class="ot">&lt;-</span> df[, <span class="fu">sapply</span>(df, is.numeric)] <span class="co"># apply系は応用編。</span></span>
-<span id="cb32-13"><a href="#cb32-13"></a>  idx <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Min"</span>, <span class="st">"1st_Qu"</span>, <span class="st">"Median"</span>, <span class="st">"Mean"</span>, <span class="st">"3rd_Qu"</span>, <span class="st">"Max"</span>, <span class="st">"NAs"</span>)</span>
-<span id="cb32-14"><a href="#cb32-14"></a>  out <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb32-15"><a href="#cb32-15"></a>    <span class="at">row.names =</span> idx,</span>
-<span id="cb32-16"><a href="#cb32-16"></a>    <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="fu">length</span>(idx), <span class="fu">ncol</span>(tmp_df))</span>
-<span id="cb32-17"><a href="#cb32-17"></a>  )</span>
-<span id="cb32-18"><a href="#cb32-18"></a>  <span class="fu">colnames</span>(out) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(tmp_df)</span>
-<span id="cb32-19"><a href="#cb32-19"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(idx)){</span>
-<span id="cb32-20"><a href="#cb32-20"></a>    tmp_func <span class="ot">&lt;-</span> func_list[[i]]</span>
-<span id="cb32-21"><a href="#cb32-21"></a>    out[i, ] <span class="ot">&lt;-</span> <span class="fu">apply</span>(tmp_df, <span class="dv">2</span>, <span class="cf">function</span>(x){<span class="fu">tmp_func</span>(x)})</span>
-<span id="cb32-22"><a href="#cb32-22"></a>  }</span>
-<span id="cb32-23"><a href="#cb32-23"></a>  <span class="fu">return</span>(out)</span>
-<span id="cb32-24"><a href="#cb32-24"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>linear_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb31-2"><a href="#cb31-2"></a>  online.visits <span class="sc">~</span> age <span class="sc">+</span> email <span class="sc">+</span> credit.score <span class="sc">+</span> sat.selection,</span>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="at">data =</span> usedata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="結果" class="slide level2">
-<h2>結果</h2>
+<section id="回帰分析lm-1" class="slide level2">
+<h2>回帰分析<code>lm</code></h2>
 <ul>
-<li>これを使えばなんとかcsvに出せる</li>
+<li>DMを送ると、平均して約15回程度訪問回数が増えそう</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">make_summary</span>(usedata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">summary</span>(linear_model)<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       cust.id      age credit.score distance.to.store online.visits
-Min       1.00 19.34134     542.9708         0.2136016         0.000
-1st_Qu  250.75 31.42731     691.6955         3.3382843         0.000
-Median  500.50 35.10423     725.4574         7.1317067         6.000
-Mean    500.50 34.92205     725.4884        14.6552541        28.293
-3rd_Qu  750.25 38.20003     757.2013        16.6588601        31.000
-Max    1000.00 51.86274     880.7589       267.0863998       606.000
-NAs       0.00  0.00000       0.0000         0.0000000         0.000
-       online.trans online.spend store.trans store.spend sat.service
-Min           0.000      0.00000       0.000     0.00000    1.000000
-1st_Qu        0.000      0.00000       0.000     0.00000    3.000000
-Median        2.000     37.02903       1.000    30.05388    3.000000
-Mean          8.385    170.31824       1.323    47.58210    3.069803
-3rd_Qu        9.000    177.88802       2.000    66.48955    4.000000
-Max         169.000   3593.03462      12.000   705.65956    5.000000
-NAs           0.000      0.00000       0.000     0.00000  341.000000
-       sat.selection
-Min         1.000000
-1st_Qu      2.000000
-Median      2.000000
-Mean        2.400607
-3rd_Qu      3.000000
-Max         5.000000
-NAs       341.000000</code></pre>
+<pre><code>                 Estimate  Std. Error    t value    Pr(&gt;|t|)
+(Intercept)   59.15012203 26.85283195  2.2027517 0.027960321
+age           -0.53306729  0.38247112 -1.3937452 0.163867965
+emailyes      15.08167808  4.59455006  3.2825147 0.001083616
+credit.score  -0.03003998  0.03638709 -0.8255672 0.409350715
+sat.selection -1.45660311  2.00107850 -0.7279090 0.466929795</code></pre>
 </div>
 </div>
+<ul>
+<li>でも、結果を安易に信じてはいけない
+<ul>
+<li>統計的な因果関係は実際難しいことが多いので要注意</li>
+<li>オンラインを使う人にDM送ってない？(選択バイアス)</li>
+</ul></li>
+<li>反面、当たって砕けて得られる経験もある</li>
+</ul>
 </section>
-<section id="まとめ" class="slide level2">
-<h2>まとめ</h2>
+<section id="まとめ1" class="slide level2">
+<h2>まとめ1</h2>
 <ul>
 <li><code>base</code>な書き方で基本的な集計を楽しもう
 <ul>
@@ -918,8 +868,24 @@ NAs       341.000000</code></pre>
 <li>割とこのあたり簡単な算数で表現できがち</li>
 </ul></li>
 <li>関数は<code>base</code>で書くと常に機能する</li>
-<li>とはいえお仕事ではいろんなものに世話になる→</li>
 </ul>
+</section>
+<section id="まとめ2" class="slide level2">
+<h2>まとめ2</h2>
+<ul>
+<li>手法は高度になるほど考えることが増える
+<ul>
+<li>安易に使うと意思決定を誤る</li>
+</ul></li>
+<li>とはいえ使わないことには何も覚えない
+<ul>
+<li>いっぱい使っていっぱい失敗しよう。</li>
+<li>わかる人は失敗を許し、守ってあげよう(自戒)</li>
+</ul></li>
+</ul>
+</section>
+<section id="enjoy" class="slide level2">
+<h2>Enjoy!</h2>
 </section>
 <section id="お仕事でお世話になるシリーズ①" class="slide level2">
 <h2>お仕事でお世話になるシリーズ①</h2>
@@ -961,9 +927,6 @@ NAs       341.000000</code></pre>
 <li>Pythonとかも書いてやっていけるので楽しい。</li>
 </ul></li>
 </ul>
-</section>
-<section id="enjoy" class="slide level2">
-<h2>Enjoy!</h2>
 <div class="footer footer-default">
 
 </div>

@@ -255,74 +255,44 @@ xlab = "1 / √店舗までの距離", ylab = "店舗での支出額")
     -   売上や所得など: `log`(対数)変換する
     -   距離：逆数への変換をとる　など
 
-## csv出力
-
--   csvに出力してExcelで加工したい場合がある
--   例えば相関行列は簡単にcsv出力可能
-
+## 回帰分析`lm`
+- 「統計学」っぽいことも試して終わろう。
+- DMによる施策でどれだけオンライン訪問が増えたか確かめたい
+  - 施策の効果検証でよくある枠組み。
+- `formula`という記法`y ~ x`でモデル式を書く。
 ```{r echo = TRUE}
-cor_mat <- cor(usedata[, usecols])
-write.csv(cor_mat, "./output/cor_matrix.csv",
-          row.names = FALSE,
-          fileEncoding = "CP932" # Windowsでは推奨
-)
-
+linear_model <- lm(
+  online.visits ~ age + email + credit.score + sat.selection,
+  data = usedata)
 ```
 
-## `summary`は曲者
-
--   `summary`は明らかに出力に向いていない。 ![](https://github.com/8-u8/TokyoR/blob/master/20230422/Base_for_BeginneRs/output/summary_top.png)
--   どうにかスプレッドシート形式に適した形にできないか？
-    -   1つ1つ計算するのもいいが、せっかくなら楽をしたい
-
-## 【応用】`summary`っぽいものを出す例
-
--   難しいのでとりあえず「やるとできる」と覚えて
-
-
+## 回帰分析`lm`
+- DMを送ると、平均して約15回程度訪問回数が増えそう
 ```{r echo = TRUE}
-func_list <- list(
-  func_min = function(x){min(x, na.rm = TRUE)},
-  func_1qu = function(x){quantile(x, 0.25, na.rm = TRUE)},
-  func_med = function(x){median(x, na.rm = TRUE)},
-  func_ave = function(x){mean(x, na.rm = TRUE)},
-  func_3qu = function(x){quantile(x, 0.75, na.rm = TRUE)},
-  func_max = function(x){max(x, na.rm = TRUE)},
-  func_nas = function(x){sum(is.na(x))}
-)
-make_summary <- function(df){
-  # 数値型に絞る
-  tmp_df <- df[, sapply(df, is.numeric)] # apply系は応用編。
-  idx <- c("Min", "1st_Qu", "Median", "Mean", "3rd_Qu", "Max", "NAs")
-  out <- data.frame(
-    row.names = idx,
-    matrix(0, length(idx), ncol(tmp_df))
-  )
-  colnames(out) <- colnames(tmp_df)
-  for(i in 1:length(idx)){
-    tmp_func <- func_list[[i]]
-    out[i, ] <- apply(tmp_df, 2, function(x){tmp_func(x)})
-  }
-  return(out)
-}
+summary(linear_model)$coefficients
 ```
+- でも、結果を安易に信じてはいけない
+  - 統計的な因果関係は実際難しいことが多いので要注意
+  - オンラインを使う人にDM送ってない？(選択バイアス)
+- 反面、当たって砕けて得られる経験もある
 
-## 結果
-
--   これを使えばなんとかcsvに出せる
-
-```{r echo = TRUE}
-make_summary(usedata)
-```
-
-## まとめ
+## まとめ1
 - `base`な書き方で基本的な集計を楽しもう
   - 簡単な確認くらいなら慣れたらこっちのほうが速い
 - ただデータを眺めるだけでも示唆が得られるが、  
 現実に合わせて数値の変換を考えられるとより洞察が深まることもある
   - 割とこのあたり簡単な算数で表現できがち
 - 関数は`base`で書くと常に機能する
-- とはいえお仕事ではいろんなものに世話になる→
+
+## まとめ2
+- 手法は高度になるほど考えることが増える
+  - 安易に使うと意思決定を誤る
+- とはいえ使わないことには何も覚えない
+  - いっぱい使っていっぱい失敗しよう。
+  - わかる人は失敗を許し、守ってあげよう(自戒)
+
+
+##  Enjoy!
 
 ## お仕事でお世話になるシリーズ①
 
@@ -348,5 +318,3 @@ make_summary(usedata)
 -   Quartoで記述しています。
     -   なんかいいドキュメンテーションライブラリ
     -   Pythonとかも書いてやっていけるので楽しい。
-
-##  Enjoy!
