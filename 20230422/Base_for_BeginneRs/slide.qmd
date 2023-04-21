@@ -206,8 +206,7 @@ cor(usedata[, usecols])
 ```{r echo = TRUE}
 # byの中に複数の変数を入れてもOK
 online_spend_by_ages <- aggregate(usedata$online.spend,
-by = list(usedata$ages), sum
-)
+by = list(usedata$ages), sum)
 print(online_spend_by_ages)
 sum(online_spend_by_ages[, 2])
 
