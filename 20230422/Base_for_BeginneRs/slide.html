@@ -834,7 +834,8 @@ store.spend        -0.05224465 -0.051690053  0.89275685  1.000000000</code></pre
 <section id="回帰分析lm-1" class="slide level2">
 <h2>回帰分析<code>lm</code></h2>
 <ul>
-<li>DMを送ると、平均して約15回程度訪問回数が増えそう</li>
+<li>DMが届いた人は、届かない人より平均15回程度<br>
+オンライン訪問回数が増えそう</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">summary</span>(linear_model)<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -850,10 +851,9 @@ sat.selection -1.45660311  2.00107850 -0.7279090 0.466929795</code></pre>
 <ul>
 <li>でも、結果を安易に信じてはいけない
 <ul>
-<li>統計的な因果関係は実際難しいことが多いので要注意</li>
+<li>統計的な因果関係の検証は実際難しい</li>
 <li>オンラインを使う人にDM送ってない？(選択バイアス)</li>
 </ul></li>
-<li>反面、当たって砕けて得られる経験もある</li>
 </ul>
 </section>
 <section id="まとめ1" class="slide level2">
@@ -887,6 +887,10 @@ sat.selection -1.45660311  2.00107850 -0.7279090 0.466929795</code></pre>
 </section>
 <section id="enjoy" class="slide level2">
 <h2>Enjoy!</h2>
+<ul>
+<li>発表では言わないけど、次スライド以降で<br>
+仕事で使えるパッケージを列挙してます。</li>
+</ul>
 </section>
 <section id="お仕事でお世話になるシリーズ①" class="slide level2">
 <h2>お仕事でお世話になるシリーズ①</h2>
@@ -912,10 +916,17 @@ sat.selection -1.45660311  2.00107850 -0.7279090 0.466929795</code></pre>
 <ul>
 <li><code>polars</code>
 <ul>
-<li><code>pandas</code>に代わるライブラリとして注目</li>
-<li>Rにも<a href="https://github.com/pola-rs/r-polars">パッケージ</a>が存在する。</li>
 <li>使ってみると<code>tidyverse</code>の100倍速いときがある</li>
-<li>クセは強いが速いことは正義。</li>
+</ul></li>
+<li><code>tidymodels</code>
+<ul>
+<li>今日も発表があると思う。</li>
+<li>特に機械学習モデル構築を便利にする</li>
+</ul></li>
+<li><code>psych</code>
+<ul>
+<li>いぶし銀の因子分析パッケージ</li>
+<li>その他データ要約も得意</li>
 </ul></li>
 </ul>
 </section>
