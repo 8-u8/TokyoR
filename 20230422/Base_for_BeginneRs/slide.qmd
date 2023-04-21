@@ -217,13 +217,13 @@ sum(online_spend_by_ages[, 2])
 ## 実務に連動した変換
 
 -   店舗までの距離と、店舗での取引回数との相関は`r cor(usedata$distance.to.store, usedata$store.spend)`。
-    -   店舗までの距離が遠いほど、取引回数は減るのが自然
-    -   この結果は逆に「遠いほど取引回数が増える」......？
+    -   店舗までの距離が遠いほど、取引回数は減るのが自然ではある
+    -   なんならもっと強い相関があっても良さそうだが？
 -   本当にこの相関は現実を捉えられているのか？？
 
 ## 実務に連動した変換
-
--   散布図をみるとむしろ、反比例しているんじゃないか......？
+-   相関だけで安易に判断しないことがいいかも
+-   散布図をみると「反比例」している......？
 
 ```{r echo = TRUE}
 plot(usedata$distance.to.store, usedata$store.spend)
@@ -239,16 +239,14 @@ cor(x = 1 / usedata$distance.to.store, y = usedata$store.trans)
 ```
 
 ```{r echo = TRUE}
-plot(
-    1 / usedata$distance.to.store, y = usedata$store.spend,
-xlab = "1 / 店舗までの距離", ylab = "店舗での支出額"
-)
+plot(    1 / usedata$distance.to.store, y = usedata$store.spend,
+xlab = "1 / 店舗までの距離", ylab = "店舗での支出額")
 ```
 
 ## 実務に連動した変換
 - 相関はあくまで「直線的な連関」しか示唆しない
-  - そうでない連関の場合相関係数は信頼できない！
--   散布図や仮説をもとに変換を行うことで\
+  - そうでない連関の場合相関係数は注意
+-   散布図や実務・経験をもとに変換を行うことで\
     示唆を得られることもある
 -   (経験的に)有効な変換がある
     -   売上や所得など: `log`(対数)変換する
@@ -270,7 +268,7 @@ write.csv(cor_mat, "./output/cor_matrix.csv",
 
 ## `summary`は曲者
 
--   `summary`は明らかに出力に向いていない。 ![](/output/summary_top.png)
+-   `summary`は明らかに出力に向いていない。 ![](./output/summary_top.png)
 -   どうにかスプレッドシート形式に適した形にできないか？
     -   1つ1つ計算するのもいいが、せっかくなら楽をしたい
 

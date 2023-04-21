@@ -763,8 +763,8 @@ store.spend        -0.05224465 -0.051690053  0.89275685  1.000000000</code></pre
 <ul>
 <li>店舗までの距離と、店舗での取引回数との相関は-0.2414949。
 <ul>
-<li>店舗までの距離が遠いほど、取引回数は減るのが自然</li>
-<li>この結果は逆に「遠いほど取引回数が増える」……？</li>
+<li>店舗までの距離が遠いほど、取引回数は減るのが自然ではある</li>
+<li>なんならもっと強い相関があっても良さそうだが？</li>
 </ul></li>
 <li>本当にこの相関は現実を捉えられているのか？？</li>
 </ul>
@@ -772,7 +772,8 @@ store.spend        -0.05224465 -0.051690053  0.89275685  1.000000000</code></pre
 <section id="実務に連動した変換-1" class="slide level2">
 <h2>実務に連動した変換</h2>
 <ul>
-<li>散布図をみるとむしろ、反比例しているんじゃないか……？</li>
+<li>相関だけで安易に判断しないことがいいかも</li>
+<li>散布図をみると「反比例」している……？</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">plot</span>(usedata<span class="sc">$</span>distance.to.store, usedata<span class="sc">$</span>store.spend)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -791,10 +792,8 @@ store.spend        -0.05224465 -0.051690053  0.89275685  1.000000000</code></pre
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">plot</span>(</span>
-<span id="cb30-2"><a href="#cb30-2"></a>    <span class="dv">1</span> <span class="sc">/</span> usedata<span class="sc">$</span>distance.to.store, <span class="at">y =</span> usedata<span class="sc">$</span>store.spend,</span>
-<span id="cb30-3"><a href="#cb30-3"></a><span class="at">xlab =</span> <span class="st">"1 / 店舗までの距離"</span>, <span class="at">ylab =</span> <span class="st">"店舗での支出額"</span></span>
-<span id="cb30-4"><a href="#cb30-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">plot</span>(    <span class="dv">1</span> <span class="sc">/</span> usedata<span class="sc">$</span>distance.to.store, <span class="at">y =</span> usedata<span class="sc">$</span>store.spend,</span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="at">xlab =</span> <span class="st">"1 / 店舗までの距離"</span>, <span class="at">ylab =</span> <span class="st">"店舗での支出額"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="slide_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
@@ -803,9 +802,9 @@ store.spend        -0.05224465 -0.051690053  0.89275685  1.000000000</code></pre
 <ul>
 <li>相関はあくまで「直線的な連関」しか示唆しない
 <ul>
-<li>そうでない連関の場合相関係数は信頼できない！</li>
+<li>そうでない連関の場合相関係数は注意</li>
 </ul></li>
-<li>散布図や仮説をもとに変換を行うことで<br>
+<li>散布図や実務・経験をもとに変換を行うことで<br>
 示唆を得られることもある</li>
 <li>(経験的に)有効な変換がある
 <ul>
@@ -831,7 +830,7 @@ store.spend        -0.05224465 -0.051690053  0.89275685  1.000000000</code></pre
 <section id="summaryは曲者" class="slide level2">
 <h2><code>summary</code>は曲者</h2>
 <ul>
-<li><code>summary</code>は明らかに出力に向いていない。 <img data-src="/output/summary_top.png"></li>
+<li><code>summary</code>は明らかに出力に向いていない。 <img data-src="./output/summary_top.png"></li>
 <li>どうにかスプレッドシート形式に適した形にできないか？
 <ul>
 <li>1つ1つ計算するのもいいが、せっかくなら楽をしたい</li>
