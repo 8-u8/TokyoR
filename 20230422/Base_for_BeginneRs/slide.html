@@ -672,13 +672,15 @@ ECが多めという示唆も得られる。こういうことの積み重ね。
 <section id="データの関連を見るplot" class="slide level2">
 <h2>データの関連を見る<code>plot</code></h2>
 <ul>
-<li>2つの変数の関係性を見たいなら<code>plot</code></li>
-<li>あんまり違いがでない(あるある)</li>
+<li>2つの変数の関係性を見たいなら<code>plot</code>
+<ul>
+<li>ふんわり「山なり」な関係……？</li>
+</ul></li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">plot</span>(<span class="at">x =</span> usedata<span class="sc">$</span>age, <span class="at">y =</span> usedata<span class="sc">$</span>store.score, <span class="at">main =</span> <span class="st">"年齢×店舗支払い"</span>)</span>
-<span id="cb18-3"><a href="#cb18-3"></a><span class="fu">plot</span>(<span class="at">x =</span> usedata<span class="sc">$</span>age, <span class="at">y =</span> usedata<span class="sc">$</span>online.score, <span class="at">main =</span> <span class="st">"年齢×EC支払い"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">plot</span>(<span class="at">x =</span> usedata<span class="sc">$</span>age, <span class="at">y =</span> usedata<span class="sc">$</span>store.spend, <span class="at">main =</span> <span class="st">"年齢×店舗支払い"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="fu">plot</span>(<span class="at">x =</span> usedata<span class="sc">$</span>age, <span class="at">y =</span> usedata<span class="sc">$</span>online.spend, <span class="at">main =</span> <span class="st">"年齢×EC支払い"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="slide_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>

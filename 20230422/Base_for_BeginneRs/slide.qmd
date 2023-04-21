@@ -172,12 +172,12 @@ sum(online_spend_by_ages[, 2])
 ## データの関連を見る`plot`
 
 -   2つの変数の関係性を見たいなら`plot`
-- あんまり違いがでない(あるある)
+    -   ふんわり「山なり」な関係……？  
 
 ```{r echo = TRUE}
 par(mfrow = c(1,2))
-plot(x = usedata$age, y = usedata$store.score, main = "年齢×店舗支払い")
-plot(x = usedata$age, y = usedata$online.score, main = "年齢×EC支払い")
+plot(x = usedata$age, y = usedata$store.spend, main = "年齢×店舗支払い")
+plot(x = usedata$age, y = usedata$online.spend, main = "年齢×EC支払い")
 
 
 ```
