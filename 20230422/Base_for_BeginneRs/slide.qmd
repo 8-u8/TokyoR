@@ -274,7 +274,7 @@ write.csv(cor_mat, "./output/cor_matrix.csv",
 
 ## 【応用】`summary`っぽいものを出す例
 
--   `list`型に関数を格納して`apply`をやると実行可能
+-   難しいのでとりあえず「やるとできる」と覚えて
 
 
 ```{r echo = TRUE}
