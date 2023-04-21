@@ -787,14 +787,14 @@ store.spend        -0.05224465 -0.051690053  0.89275685  1.000000000</code></pre
 <li>距離の逆数との相関を取ってみる</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">cor</span>(<span class="at">x =</span> <span class="dv">1</span> <span class="sc">/</span> usedata<span class="sc">$</span>distance.to.store, <span class="at">y =</span> usedata<span class="sc">$</span>store.trans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">cor</span>(<span class="at">x =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(usedata<span class="sc">$</span>distance.to.store), <span class="at">y =</span> usedata<span class="sc">$</span>store.trans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4656151</code></pre>
+<pre><code>[1] 0.5340744</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">plot</span>(    <span class="dv">1</span> <span class="sc">/</span> usedata<span class="sc">$</span>distance.to.store, <span class="at">y =</span> usedata<span class="sc">$</span>store.spend,</span>
-<span id="cb30-2"><a href="#cb30-2"></a><span class="at">xlab =</span> <span class="st">"1 / 店舗までの距離"</span>, <span class="at">ylab =</span> <span class="st">"店舗での支出額"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">plot</span>(<span class="at">x=</span><span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(usedata<span class="sc">$</span>distance.to.store), <span class="at">y =</span> usedata<span class="sc">$</span>store.spend,</span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="at">xlab =</span> <span class="st">"1 / √店舗までの距離"</span>, <span class="at">ylab =</span> <span class="st">"店舗での支出額"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="slide_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>

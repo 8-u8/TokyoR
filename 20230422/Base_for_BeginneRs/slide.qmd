@@ -235,13 +235,13 @@ plot(usedata$distance.to.store, usedata$store.spend)
 -   距離の逆数との相関を取ってみる
 
 ```{r echo = TRUE}
-cor(x = 1 / usedata$distance.to.store, y = usedata$store.trans)
+cor(x = 1 / sqrt(usedata$distance.to.store), y = usedata$store.trans)
 
 ```
 
 ```{r echo = TRUE}
-plot(    1 / usedata$distance.to.store, y = usedata$store.spend,
-xlab = "1 / 店舗までの距離", ylab = "店舗での支出額")
+plot(x=1 / sqrt(usedata$distance.to.store), y = usedata$store.spend,
+xlab = "1 / √店舗までの距離", ylab = "店舗での支出額")
 ```
 
 ## 実務に連動した変換
