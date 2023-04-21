@@ -268,7 +268,7 @@ write.csv(cor_mat, "./output/cor_matrix.csv",
 
 ## `summary`は曲者
 
--   `summary`は明らかに出力に向いていない。 ![](./output/summary_top.png)
+-   `summary`は明らかに出力に向いていない。 ![](https://github.com/8-u8/TokyoR/blob/master/20230422/Base_for_BeginneRs/output/summary_top.png)
 -   どうにかスプレッドシート形式に適した形にできないか？
     -   1つ1つ計算するのもいいが、せっかくなら楽をしたい
 
