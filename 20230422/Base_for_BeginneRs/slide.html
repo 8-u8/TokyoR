@@ -640,6 +640,34 @@ ECが多めという示唆も得られる。こういうことの積み重ね。
 </div>
 </div>
 </section>
+<section id="グループ別集計aggregate" class="slide level2">
+<h2>グループ別集計<code>aggregate</code></h2>
+<ul>
+<li><code>aggregate</code>関数でグループ別集計が可能。</li>
+<li>先に作った年代別に<code>online.spend</code>の合計を出してみる</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># byの中に複数の変数を入れてもOK</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>online_spend_by_ages <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(usedata<span class="sc">$</span>online.spend,</span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="at">by =</span> <span class="fu">list</span>(usedata<span class="sc">$</span>ages), sum)</span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="fu">print</span>(online_spend_by_ages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Group.1         x
+1    10代      0.00
+2    20代  33380.28
+3    30代 119398.47
+4    40代  17539.49
+5    50代      0.00</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">sum</span>(online_spend_by_ages[, <span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 170318.2</code></pre>
+</div>
+</div>
+<ul>
+<li>さっき見た金額合計と一致するのを確認できる。</li>
+</ul>
+</section>
 <section id="データの関連を見るplot" class="slide level2">
 <h2>データの関連を見る<code>plot</code></h2>
 <ul>
@@ -647,23 +675,23 @@ ECが多めという示唆も得られる。こういうことの積み重ね。
 <li>あんまり違いがでない(あるある)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">plot</span>(<span class="at">x =</span> usedata<span class="sc">$</span>age, <span class="at">y =</span> usedata<span class="sc">$</span>store.score, <span class="at">main =</span> <span class="st">"年齢×店舗支払い"</span>)</span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="fu">plot</span>(<span class="at">x =</span> usedata<span class="sc">$</span>age, <span class="at">y =</span> usedata<span class="sc">$</span>online.score, <span class="at">main =</span> <span class="st">"年齢×EC支払い"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">plot</span>(<span class="at">x =</span> usedata<span class="sc">$</span>age, <span class="at">y =</span> usedata<span class="sc">$</span>store.score, <span class="at">main =</span> <span class="st">"年齢×店舗支払い"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="fu">plot</span>(<span class="at">x =</span> usedata<span class="sc">$</span>age, <span class="at">y =</span> usedata<span class="sc">$</span>online.score, <span class="at">main =</span> <span class="st">"年齢×EC支払い"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="slide_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch"></section>
-<section id="ちなみに" class="slide level2">
-<h2>ちなみに</h2>
+<img data-src="slide_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>
+<section id="離散値同士の関連を見るtable" class="slide level2">
+<h2>離散値同士の関連を見る<code>table</code></h2>
 <p>離散値の場合<code>table</code>でクロス表にしてしまうのも手。<br>
 <code>colSums</code>/<code>rowSums</code>をうまく使うと縦横それぞれ%表も作れる。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>cross_table <span class="ot">&lt;-</span> <span class="fu">table</span>(usedata<span class="sc">$</span>ages, usedata<span class="sc">$</span>email)</span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="co"># roundで丸めができる(四捨五入ではないので注意)。</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a>cross_table_p_col <span class="ot">&lt;-</span> <span class="fu">round</span>(cross_table <span class="sc">/</span> <span class="fu">colSums</span>(cross_table), <span class="dv">2</span>) <span class="co"># 縦%</span></span>
-<span id="cb15-4"><a href="#cb15-4"></a>cross_table_p_row <span class="ot">&lt;-</span> <span class="fu">round</span>(cross_table <span class="sc">/</span> <span class="fu">rowSums</span>(cross_table), <span class="dv">2</span>) <span class="co"># 横%</span></span>
-<span id="cb15-5"><a href="#cb15-5"></a></span>
-<span id="cb15-6"><a href="#cb15-6"></a><span class="fu">cbind</span>(cross_table, cross_table_p_col, cross_table_p_row)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>cross_table <span class="ot">&lt;-</span> <span class="fu">table</span>(usedata<span class="sc">$</span>ages, usedata<span class="sc">$</span>email)</span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="co"># roundで丸めができる(四捨五入ではないので注意)。</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>cross_table_p_col <span class="ot">&lt;-</span> <span class="fu">round</span>(cross_table <span class="sc">/</span> <span class="fu">colSums</span>(cross_table), <span class="dv">2</span>) <span class="co"># 縦%</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a>cross_table_p_row <span class="ot">&lt;-</span> <span class="fu">round</span>(cross_table <span class="sc">/</span> <span class="fu">rowSums</span>(cross_table), <span class="dv">2</span>) <span class="co"># 横%</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a></span>
+<span id="cb19-6"><a href="#cb19-6"></a><span class="fu">cbind</span>(cross_table, cross_table_p_col, cross_table_p_row)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      no yes   no  yes   no  yes
 10代   0   2 0.00 0.00 0.00 1.00
@@ -681,11 +709,11 @@ ECが多めという示唆も得られる。こういうことの積み重ね。
 <li>無相関の検定までやりたいなら<code>cor.test</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">print</span>(<span class="fu">cor</span>(usedata<span class="sc">$</span>age, usedata<span class="sc">$</span>credit.score))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">print</span>(<span class="fu">cor</span>(usedata<span class="sc">$</span>age, usedata<span class="sc">$</span>credit.score))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.2545045</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">cor.test</span>(usedata<span class="sc">$</span>age, usedata<span class="sc">$</span>credit.score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">cor.test</span>(usedata<span class="sc">$</span>age, usedata<span class="sc">$</span>credit.score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -707,8 +735,8 @@ sample estimates:
 <li>複数の変数それぞれの相関を見たい場合も<code>cor</code>。</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>usecols <span class="ot">&lt;-</span> <span class="fu">colnames</span>(usedata[, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span><span class="sc">:</span><span class="dv">10</span>)])</span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">cor</span>(usedata[, usecols])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>usecols <span class="ot">&lt;-</span> <span class="fu">colnames</span>(usedata[, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span><span class="sc">:</span><span class="dv">10</span>)])</span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="fu">cor</span>(usedata[, usecols])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                           age credit.score distance.to.store online.visits
 age                1.000000000  0.254504457        0.00198741   -0.06138107
@@ -730,34 +758,6 @@ store.trans        -0.04024588 -0.040891332  1.00000000  0.892756851
 store.spend        -0.05224465 -0.051690053  0.89275685  1.000000000</code></pre>
 </div>
 </div>
-</section>
-<section id="グループ別集計aggregate" class="slide level2">
-<h2>グループ別集計<code>aggregate</code></h2>
-<ul>
-<li><code>aggregate</code>関数でグループ別集計が可能。</li>
-<li>先に作った年代別に<code>online.spend</code>の合計を出してみる</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># byの中に複数の変数を入れてもOK</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a>online_spend_by_ages <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(usedata<span class="sc">$</span>online.spend,</span>
-<span id="cb23-3"><a href="#cb23-3"></a><span class="at">by =</span> <span class="fu">list</span>(usedata<span class="sc">$</span>ages), sum)</span>
-<span id="cb23-4"><a href="#cb23-4"></a><span class="fu">print</span>(online_spend_by_ages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  Group.1         x
-1    10代      0.00
-2    20代  33380.28
-3    30代 119398.47
-4    40代  17539.49
-5    50代      0.00</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">sum</span>(online_spend_by_ages[, <span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 170318.2</code></pre>
-</div>
-</div>
-<ul>
-<li>さっき見た金額合計と一致するのを確認できる。</li>
-</ul>
 </section>
 <section id="実務に連動した変換" class="slide level2">
 <h2>実務に連動した変換</h2>

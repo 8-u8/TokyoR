@@ -151,6 +151,23 @@ usedata$ages <- paste0((usedata$age %/% 10) * 10, "代")
 head(usedata[, c("age", "ages")])
 ```
 
+## グループ別集計`aggregate`
+
+-   `aggregate`関数でグループ別集計が可能。
+-   先に作った年代別に`online.spend`の合計を出してみる
+
+```{r echo = TRUE}
+# byの中に複数の変数を入れてもOK
+online_spend_by_ages <- aggregate(usedata$online.spend,
+by = list(usedata$ages), sum)
+print(online_spend_by_ages)
+sum(online_spend_by_ages[, 2])
+
+```
+
+-   さっき見た金額合計と一致するのを確認できる。
+
+
 ## データの関連を見る`plot`
 
 -   2つの変数の関係性を見たいなら`plot`
@@ -164,7 +181,7 @@ plot(x = usedata$age, y = usedata$online.score, main = "年齢×EC支払い")
 
 ```
 
-## ちなみに
+## 離散値同士の関連を見る`table`
 
 離散値の場合`table`でクロス表にしてしまうのも手。\
 `colSums`/`rowSums`をうまく使うと縦横それぞれ%表も作れる。
@@ -199,21 +216,6 @@ usecols <- colnames(usedata[, c(2, 3, 5:10)])
 cor(usedata[, usecols])
 ```
 
-## グループ別集計`aggregate`
-
--   `aggregate`関数でグループ別集計が可能。
--   先に作った年代別に`online.spend`の合計を出してみる
-
-```{r echo = TRUE}
-# byの中に複数の変数を入れてもOK
-online_spend_by_ages <- aggregate(usedata$online.spend,
-by = list(usedata$ages), sum)
-print(online_spend_by_ages)
-sum(online_spend_by_ages[, 2])
-
-```
-
--   さっき見た金額合計と一致するのを確認できる。
 
 ## 実務に連動した変換
 
