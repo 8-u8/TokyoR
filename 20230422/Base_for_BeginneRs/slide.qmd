@@ -1,0 +1,336 @@
+---
+title: "(可能な限り)<br>`base`Rで統計学を<br>楽しむ"
+author: "Kien Y. Knot"
+format: 
+  revealjs:
+    theme: night
+editor: visual
+---
+
+## 誰？
+
+<div align="left">
+
+<img src="https://pbs.twimg.com/profile_images/1049991126000660482/IjnuDedI_400x400.jpg" width="20%"/>
+
+-   [きぬいと](https://twitter.com/0_u0)
+    -   社会人6年目になり、管理職となってしまった。
+    -   マーケティングリサーチ→マーケティングコンサル
+    -   一緒に仕事したい人を探しています
+
+## この報告でやること
+
+-   あえて`tidyverse`を使わないRで統計学を楽しむ。
+
+## なぜ`base`Rなのか？
+
+<div align="center">
+
+<img src="https://m.media-amazon.com/images/I/41kTju67OUL._SX350_BO1,204,203,200_.jpg" width="25%"/>
+
+<div align="left">
+
+<span style="font-size:75%"> [Rによる実践的マーケティングリサーチと分析](https://amzn.asia/d/cmFVSQi)より
+
+> <span style="font-size: 50%;line-height: 1em;"> <b>`base` Rの能力はすべてのRユーザーにとって不可欠</b>なので学ぶ必要があります
+> </p>
+> `base` Rによるコードは`tidyverse`によるものほど簡潔でないかもしれませんが、<b>それは常に機能します(p9)</b>
+> </p>
+> </span>
+
+## 
+
+-   多くの便利なパッケージは{base}な文法で記述
+    -   初心者を抜け出したらきっと関数の中身を読むと思う
+-   tidyverseで関数を作ろうとすると、ちょっとめんどくさい配慮がいる。
+    -   自分で関数を作る場合にも`base`で書いたほうが楽
+
+## 御託はここまで
+
+-   「統計学」つってるけど多変量解析も検定もないです。
+-   時間もそんなないので全部は見ない。トピックだけ。
+
+## 使用するデータ
+
+<div align="center">
+
+<img src="https://m.media-amazon.com/images/I/41kTju67OUL._SX350_BO1,204,203,200_.jpg" width="25%"/>
+
+-   この本の4.1節のデータを使います
+-   小売店での顧客取引を想定した模擬データです
+
+##  データの読み込み`read.csv`
+
+-   `stringAsFactors`を`TRUE`にするのは、本当はよくない
+    -   でも`summary`では良い動きをするのであえて使う
+
+```{r echo = TRUE}
+usedata <- read.csv(
+  # csvファイルならURL突っ込んでも持ってこれるよ
+  "http://r-marketing.r-forge.r-project.org/data/rintro-chapter4.csv",
+  stringsAsFactors = TRUE)
+head(usedata, n = 5) # 先頭5行だけ見る
+```
+
+## データの確認1: データの規模
+
+- 基本的なデータの規模(行数、列数)の確認
+- 変数名もあらかじめ確認しておくと良い
+  - 日本語の場合は文字列の`"."`への置換が  
+  起きていることもあるので、確認したほうが安全
+
+```{r echo = TRUE}
+dim(usedata) # dimentionの略
+colnames(usedata) # names of columns
+```
+
+## データの確認2: 合計金額
+
+-   このデータには`online.spend`と`store.spend`がある。
+    -   ECと店舗それぞれでの支払金額
+-   だいたいこれらは「合計」を見て意思決定をしたくなる
+    -   平均でも良いが、平均の定義上「合計」があれば計算できる
+-   後々年齢とかDMの有無とかで分解したくなってくる
+    -   データを絞り込まない限りは必ず合計はある1つの値になるはず
+
+## データの確認2: 合計金額
+
+-   というわけで合計金額は控えておくと良い。
+
+```{r echo=TRUE}
+online_spend_sum <- sum(usedata$online.spend)
+store_spend_sum <- sum(usedata$store.spend)
+cat( # 
+  paste0(
+    "EC購入金額合計: ", online_spend_sum, "\n",
+    "店舗購入金額合計: ", store_spend_sum 
+    )
+)
+```
+
+-   ECは合計170,318円、店舗は合計47,582円。\
+    ECが多めという示唆も得られる。こういうことの積み重ね。
+
+## 全体的な傾向を見る`summary`
+
+-   `summary`でデータの要約が一覧できる
+    -   `stringsAsFactors=TRUE`のご利益はここ
+
+```{r echo=TRUE}
+summary(usedata)
+```
+
+## データの分布を見る`hist`
+
+-   確認程度なら`graphics`で十分だと思う。
+
+```{r echo = TRUE}
+
+hist(usedata$age, breaks = 30)
+
+```
+
+## 連続値を離散値にする
+
+-   例えば年齢とかは「○歳代」に置き換える事が多い
+  -   ちょっとした算数を知っていると、簡単に変換できる。
+- 関数を探すよりも、思いつくほうが速いこともある
+```{r echo = TRUE}
+# %/%は割り算の結果の整数部分を返す演算子。
+usedata$ages <- paste0((usedata$age %/% 10) * 10, "代")
+
+# 実は$だけじゃなくてこういう形でも変数を表記できる
+# pandasっぽくてわかりやすいこともある
+head(usedata[, c("age","ages")])
+```
+
+## データの関連を見る`plot`
+
+-   2つの変数の関係性を見たいなら`plot`
+
+```{r echo = TRUE}
+plot(x = usedata$age, y = usedata$credit.score)
+
+```
+
+## ちなみに
+
+離散値の場合`table`でクロス表にしてしまうのも手。\
+`colSums`/`rowSums`をうまく使うと縦横それぞれ%表も作れる。
+
+```{r echo=TRUE}
+cross_table <- table(usedata$ages, usedata$email)
+# roundで丸めができる(四捨五入ではないので注意)。
+cross_table_p_col <- round(cross_table / colSums(cross_table), 2) #縦%
+cross_table_p_row <- round(cross_table / rowSums(cross_table), 2) #横%
+
+cbind(cross_table,cross_table_p_col, cross_table_p_row)
+
+```
+
+## 相関
+
+-   2つの変数の関係性を見るには`cor`がある
+-   無相関の検定までやりたいなら`cor.test`
+
+```{r echo = TRUE}
+print(cor(usedata$age, usedata$credit.score))
+cor.test(usedata$age, usedata$credit.score)
+
+```
+
+## 相関
+
+-   複数の変数それぞれの相関を見たい場合、`cor`で一発。
+
+```{r echo = TRUE}
+usecols <- colnames(usedata[,c(2,3,5:10)])
+cor(usedata[, usecols])
+```
+
+## グループ別集計`aggregate`
+
+-   `aggregate`関数でグループ別集計が可能。
+-   先に作った年代別に`online.spend`の合計を出してみる
+
+```{r echo = TRUE}
+# byの中に複数の変数を入れてもOK
+online_spend_by_ages <- aggregate(usedata$online.spend,
+                                  by = list(usedata$ages), sum)
+print(online_spend_by_ages)
+sum(online_spend_by_ages[,2])
+
+```
+
+-   冒頭確認した値と一致するのも確認できると100点。
+
+## 実務に連動した変換
+
+-   店舗までの距離と、店舗での取引回数との相関は`r cor(usedata$distance.to.store, usedata$store.spend)`。
+    -   店舗までの距離が遠いほど、取引回数は減るのが自然
+    -   この結果は逆に「遠いほど取引回数が増える」......？
+-   本当にこの相関は現実を捉えられているのか？？
+
+## 実務に連動した変換
+
+-   散布図をみるとむしろ、反比例しているんじゃないか......？
+
+```{r echo = TRUE}
+plot(usedata$distance.to.store, usedata$store.spend)
+```
+
+## 実務に連動した変換
+
+-   距離の逆数との相関を取ってみる
+
+```{r echo = TRUE}
+cor(x = 1/usedata$distance.to.store, y = usedata$store.trans)
+
+```
+
+```{r echo = TRUE}
+plot(x = 1/usedata$distance.to.store, y = usedata$store.spend,
+     xlab = "1 / 店舗までの距離", ylab = "店舗での支出額")
+```
+
+## 実務に連動した変換
+- 相関はあくまで「直線的な連関」しか示唆しない
+  - そうでない連関の場合相関係数は信頼できない！
+-   散布図や仮説をもとに変換を行うことで\
+    示唆を得られることもある
+-   (経験的に)有効な変換がある
+    -   売上や所得など: `log`(対数)変換する
+    -   距離：逆数への変換をとる　など
+
+## csv出力
+
+-   csvに出力してExcelで加工したい場合がある
+-   例えば相関行列は簡単にcsv出力可能
+
+```{r echo = TRUE}
+cor_mat <- cor(usedata[,usecols])
+write.csv(cor_mat, "./output/cor_matrix.csv",
+          row.names = FALSE,
+          fileEncoding = "CP932" # Windowsでは推奨
+          )
+
+```
+
+## `summary`は曲者
+
+-   `summary`は明らかに出力に向いていない。 ![](/output/summary_top.png)
+-   どうにかスプレッドシート形式に適した形にできないか？
+    -   1つ1つ計算するのもいいが、せっかくなら楽をしたい
+
+## 【応用】`summary`っぽいものを出す例
+
+-   `list`型に関数を格納して`apply`をやると実行可能
+
+```{r echo = TRUE}
+func_list <- list(
+  func_min = function(x){min(x, na.rm = TRUE)},
+  func_1qu = function(x){quantile(x, 0.25, na.rm = TRUE)},
+  func_med = function(x){median(x, na.rm = TRUE)},
+  func_ave = function(x){mean(x, na.rm = TRUE)},
+  func_3qu = function(x){quantile(x, 0.75, na.rm = TRUE)},
+  func_max = function(x){max(x, na.rm = TRUE)},
+  func_nas = function(x){sum(is.na(x))}
+)
+
+make_summary <- function(df){
+  # 数値型に絞る
+  tmp_df <- df[, sapply(df, is.numeric)] # apply系は応用編。
+  idx <- c("Min", "1st_Qu", "Median", "Mean", "3rd_Qu", "Max", "NAs")
+  out <- data.frame(
+    row.names = idx,
+    matrix(0, length(idx), ncol(tmp_df))
+  )
+  colnames(out) <- colnames(tmp_df)
+  for(i in 1:length(idx)){
+    tmp_func <- func_list[[i]]
+    out[i, ] <- apply(tmp_df, 2, function(x){tmp_func(x)})
+  }
+  return(out)
+}
+```
+
+## 結果
+
+-   これを使えばなんとかcsvに出せる
+
+```{r echo = TRUE}
+make_summary(usedata)
+```
+
+## まとめ
+- `tidyverse`を使わなくても(割と)できることがある
+  - この書き方に慣れると、いろんなヘルプが読めるようになる
+- ただデータを眺めるだけでも示唆が得られるが、  
+現実に合わせて数値の変換を考えられるとより洞察が深まることもある
+  - 割とこのあたり簡単な算数で表現できがち
+- 関数は`base`で書くと常に機能する
+
+## お仕事でお世話になるシリーズ①
+
+-   `tidyverse`
+    -   操作の直感性が高い。ググれば使い方がいっぱい
+-   `data.table`
+    -   クセがあるけどこっちも速い。
+    -   [Uryuさん](https://speakerdeck.com/s_uryu/datatable1130)のスライドを見るといい
+-   `summarytools`
+    -   `summary`をよりきれいにわかりやすく出してくれる
+    -   pythonでいう`pandas_profiling`に近い
+
+## お仕事でお世話になるシリーズ②
+
+-   `polars`
+    -   `pandas`に代わるライブラリとして注目
+    -   Rにも[パッケージ](https://github.com/pola-rs/r-polars)が存在する。
+    -   使ってみると`tidyverse`の100倍速いときがある
+    -   クセは強いが速いことは正義。
+
+## このスライドは
+
+-   Quartoで記述しています。
+    -   なんかいいドキュメンテーションライブラリ
+    -   Pythonとかも書いてやっていけるので楽しい。
