@@ -1,6 +1,6 @@
 ---
 title: "(可能な限り)<br>`base`Rで統計学を<br>楽しむ"
-author: "TokyoR #105 Kien Y. Knot"
+author: "TokyoR #105 <br> Kien Y. Knot"
 format: 
   revealjs:
     theme: night
