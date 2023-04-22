@@ -1,50 +1,74 @@
-
-# df <- read.csv(url("https://www.stopcovid19.jp/data/covid19japan.csv"))
+# データの読み込み
 usedata <- read.csv(
-  # csvファイルならURL突っ込んでも持ってこれるよ
+  #csvファイルならURL突っ込んでも持ってこれるよ
   "http://r-marketing.r-forge.r-project.org/data/rintro-chapter4.csv",
   stringsAsFactors = TRUE)
 head(usedata, n = 5) # 先頭5行だけ見る
-cor.test(usedata$distance.to.store, usedata$store.spend)
 
-usedata$ages <- usedata$age %/% 10 * 10
+# データ規模
+dim(usedata) # dimentionの略
+colnames(usedata) # columns names
 
-aggregate(usedata$cust.id, by = list(usedata$email, usedata$ages), length)
-
-usedata[,sapply(usedata, is.numeric)]
-
-func_list <- list(
-  func_min = function(x){min(x, na.rm = TRUE)},
-  func_1qu = function(x){quantile(x, 0.25, na.rm = TRUE)},
-  func_med = function(x){median(x, na.rm = TRUE)},
-  func_ave = function(x){mean(x, na.rm = TRUE)},
-  func_3qu = function(x){quantile(x, 0.75, na.rm = TRUE)},
-  func_max = function(x){max(x, na.rm = TRUE)},
-  func_nas = function(x){sum(is.na(x))}
-)
-
-apply(usedata[,sapply(usedata,is.numeric)], 2, func_list$func_min)
-make_summary <- function(df){
-  # 数値型に絞る
-  tmp_df <- df[, sapply(df, is.numeric)] # apply系は応用編。
-  idx <- c("Min", "1st_Qu", "Median", "Mean", "3rd_Qu", "Max", "NAs")
-  out <- data.frame(
-    row.names = idx,
-    matrix(0, length(idx), ncol(tmp_df))
+# sum
+# 変数名は具体的であればあるほどよい
+online_spend_sum <- sum(usedata$online.spend)
+store_spend_sum <- sum(usedata$store.spend)
+cat( # 
+  paste0(
+    "EC購入金額合計: ", online_spend_sum, "\n",
+    "店舗購入金額合計: ", store_spend_sum 
   )
-  colnames(out) <- colnames(tmp_df)
-  for(i in 1:length(idx)){
-    tmp_func <- func_list[[i]]
-    out[i, ] <- apply(tmp_df, 2, function(x){tmp_func(x)})
-  }
-  return(out)
-}
-
-make_summary(usedata)
-
-idx <- c("Min", "1st_Qu", "Median", "Mean", "3rd_Qu", "Max", "NAs")
-out <- data.frame(
-  row.names = idx,
-  matrix(0, length(idx), ncol(usedata))
 )
 
+# 要約
+summary(usedata)
+
+# 1つの変数をよく見る
+par(mfrow = c(1,2))
+hist(usedata$store.spend, breaks = 30, main = "店舗支払い")
+hist(usedata$online.spend, breaks = 30, main = "EC支払い")
+
+# %/%は割り算の結果の整数部分を返す演算子。
+usedata$ages <- paste0((usedata$age %/% 10) * 10, "代")
+
+# 実は$だけじゃなくてこういう形でも変数を表記できる
+# pandasっぽくてわかりやすいこともある
+# ただし$とはデータの型が違うので注意。
+head(usedata[, c("age", "ages")])
+
+# グループ別集計
+# byの中に複数の変数を入れてもOK
+online_spend_by_ages <- aggregate(usedata$online.spend,
+                                  by = list(usedata$ages), sum)
+print(online_spend_by_ages)
+sum(online_spend_by_ages[, 2])
+
+# 2変数の関連を見る
+par(mfrow = c(1,2))
+plot(x = usedata$age, y = usedata$store.spend, main = "年齢×店舗支払い")
+plot(x = usedata$age, y = usedata$online.spend, main = "年齢×EC支払い")
+
+# クロス表
+cross_table <- table(usedata$ages, usedata$email)
+# roundで丸めができる(四捨五入ではないので注意)。
+# applyはちょっと難しいができると楽しい。
+# apply(計算対象, {行なら1,列なら2}, 計算方法)
+cross_table_p_col <- round(apply(cross_table, 2, function(x){x/sum(x)}), 2)
+cross_table_p_row <- round(t(apply(cross_table, 1, function(x){x/sum(x)})), 2)
+
+cbind(cross_table, cross_table_p_col, cross_table_p_row)
+
+# 相関
+# 相関係数にはいくつかあるけど指定できる
+print(cor(usedata$age, usedata$credit.score))
+cor.test(usedata$age, usedata$credit.score)
+# 相関行列
+usecols <- colnames(usedata[, c(2, 3, 5:10)])
+cor(usedata[, usecols])
+
+# 重回帰
+linear_model <- lm(
+  online.visits ~ age + email + credit.score + sat.selection,
+  data = usedata)
+
+summary(linear_model)$coefficients
