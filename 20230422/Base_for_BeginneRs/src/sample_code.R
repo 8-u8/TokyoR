@@ -5,7 +5,7 @@ usedata <- read.csv(
   "http://r-marketing.r-forge.r-project.org/data/rintro-chapter4.csv",
   stringsAsFactors = TRUE)
 head(usedata, n = 5) # 先頭5行だけ見る
-
+cor.test(usedata$distance.to.store, usedata$store.spend)
 
 usedata$ages <- usedata$age %/% 10 * 10
 
