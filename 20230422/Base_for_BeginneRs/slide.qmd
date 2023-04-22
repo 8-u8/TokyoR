@@ -184,13 +184,13 @@ plot(x = usedata$age, y = usedata$online.spend, main = "年齢×EC支払い")
 ## 離散値同士の関連を見る`table`
 
 離散値の場合`table`でクロス表にしてしまうのも手。\
-`colSums`/`rowSums`をうまく使うと縦横それぞれ%表も作れる。
+`apply`をうまく使うと縦横それぞれの比率も作れる。
 
 ```{r echo=TRUE}
 cross_table <- table(usedata$ages, usedata$email)
 # roundで丸めができる(四捨五入ではないので注意)。
-cross_table_p_col <- round(cross_table / colSums(cross_table), 2) # 縦%
-cross_table_p_row <- round(cross_table / rowSums(cross_table), 2) # 横%
+cross_table_p_col <- round(apply(cross_table, 2, function(x){x/sum(x)}), 2)
+cross_table_p_row <- round(t(apply(cross_table, 1, function(x){x/sum(x)})), 2)
 
 cbind(cross_table, cross_table_p_col, cross_table_p_row)
 
